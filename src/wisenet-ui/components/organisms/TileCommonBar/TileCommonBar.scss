@@ -1,0 +1,23 @@
+.TileCommonBar {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  bottom: 0%;
+  right: 0%;
+  display: flex;
+  //border: 2px solid red;
+  justify-content: center;
+  background: #000000
+}
+
+.TileCommonBar-icon {
+  height: 40px;
+  width: 40px;
+  color: #ffffff;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  //font-weight: bold;
+  &:hover {
+      color: #ff9832 !important;
+  }
+}

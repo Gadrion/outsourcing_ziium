@@ -1,0 +1,5 @@
+config/*
+scripts/*
+prettier-react/*
+src/stories/*
+src/wisenet-ui/util/vendors/*

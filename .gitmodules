@@ -1,0 +1,10 @@
+[submodule "src/wisenet-ui"]
+	path = src/wisenet-ui
+	url = ../wisenet-ui
+	branch = master
+	revision = .
+[submodule "public/media"]
+	path = public/media
+	url = ../ump_minimize
+	branch = master
+	revision = .

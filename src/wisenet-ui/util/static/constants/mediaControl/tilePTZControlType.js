@@ -1,0 +1,15 @@
+export default {
+  TOP_LEFT: 'topLeft',
+  TOP: 'top',
+  TOP_RIGHT: 'topRight',
+  RIGHT: 'right',
+  BOTTOM_RIGHT: 'bottomRight',
+  BOTTOM: 'bottom',
+  BOTTOM_LEFT: 'bottomLeft',
+  LEFT: 'left',
+  MANUAL_TRACKING: 'manualTracking',
+  AUTO_TRACKING: 'autoTracking',
+  AREA_ZOOM: 'areaZoom',
+  RETURN_1X: 'return1x',
+  BACK: 'back',
+};

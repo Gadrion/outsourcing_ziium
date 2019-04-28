@@ -1,0 +1,30 @@
+.tilebar-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  //border: 3px solid red;
+  display: flex; 
+  justify-content: center;
+  align-items: flex-end;
+}
+.tilebar {
+  position: relative;
+  bottom: 4%;
+  display: flex;
+  visibility: hidden;
+  //border: 2px solid red;
+}
+
+.tilebar-icon {
+  height: 40px;
+  width: 40px;
+  color: #ffffff;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  font-weight: bold;
+  &:hover {
+      color: #ff9832 !important;
+  }
+}

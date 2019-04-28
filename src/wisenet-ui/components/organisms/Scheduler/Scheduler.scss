@@ -1,0 +1,36 @@
+.disable-short-mode {
+  [class*='fc-content'] {
+    [class*='fc-time'] {
+      &:after, &:before {
+        display: none !important;
+      }
+      span {
+        display: unset !important;
+      }
+    }
+  }
+}
+
+[class*='fc-toolbar'] {
+  display: none !important;
+}
+
+[class*='fc-axis'] { 
+  width: 31px !important;
+}
+
+[class*='fc-day-header'] {
+  font-weight: bold;
+}
+
+.weekly-scheduler {
+  user-select: none;
+  .toolbar {
+    display: flex;
+    margin-bottom: 10px;
+    .toolbar-button {
+      margin-right: 10px;
+      padding: 5px 10px;
+    }
+  }
+}

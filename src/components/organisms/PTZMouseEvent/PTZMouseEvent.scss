@@ -1,0 +1,32 @@
+.wrapper {
+  &::after {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: #fff;
+  }
+}
+
+.icon {
+  display: inline-block;
+  font-size: 24px;
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+  color: #fff;
+  &:nth-of-type(1) {
+    transform: translate(-100%, -100%);
+  }
+  &:nth-of-type(2) {
+    transform: translate(-100%, 100%);
+  }
+  &:nth-of-type(3) {
+    transform: translate(100%, 100%);
+  }
+  &:nth-of-type(4) {
+    transform: translate(100%, -100%);
+  }
+}

@@ -1,0 +1,24 @@
+input[type=radio] {
+  margin-right: 8px;
+  margin-top: 5px;
+  display:inline-block;
+  width:15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: black;
+  border: 2px solid black;
+  cursor:pointer;
+}
+
+.radio.label {
+    margin-left: 8px;
+}
+
+
+.form-label.capitalize {
+  text-transform: capitalize;
+}
+
+
+
+  
