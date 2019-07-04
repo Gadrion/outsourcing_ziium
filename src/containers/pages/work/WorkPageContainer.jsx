@@ -5,7 +5,7 @@ import { PreLoadActions } from 'store/actionCreators';
 
 class WorkPageContainer extends React.Component {
   componentDidMount() {
-    PreLoadActions.sessionKeyGet();
+    
   }
 
   render() {
