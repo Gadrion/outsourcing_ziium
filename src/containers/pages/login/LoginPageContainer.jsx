@@ -1,29 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Auth from 'util/lib/Auth';
-import { LoginActions } from 'store/actionCreators';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import * as baseActions from 'store/modules/baseModule';
 
 class LoginPageContainer extends React.Component {
-  constructor(props) {
-    super(props);
+  componentDidUpdate() {
+    const { isLogin, history } = this.props;
 
-    if (Auth.isAuthenticated()) {
-      props.history.push('/');
+    if (isLogin) {
+      history.push('/');
     }
-  }
-
-  handleSubmit = ({
-    userid,
-    password,
-  }) => {
-    const { history } = this.props;
-    LoginActions.login({
-      userid,
-      password,
-      history,
-    });
   }
 
   render() {
@@ -43,9 +30,17 @@ class LoginPageContainer extends React.Component {
 
 LoginPageContainer.propTypes = {
   render: PropTypes.func.isRequired,
+  isLogin: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default withRouter(LoginPageContainer);
+export default withRouter(connect(
+  state => ({
+    pendding: state.loginModule.get('pendding'),
+    isLogin: state.loginModule.get('isLogin'),
+    userInfo: state.loginModule.get('userInfo'),
+    isAdmin: state.loginModule.get('isAdmin'),
+  }),
+)(LoginPageContainer));

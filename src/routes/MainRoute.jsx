@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {
-  LivePage,
+  WorkPage,
   SearchPage,
   SetupPage,
 } from 'pages';
@@ -19,10 +19,10 @@ class MainRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/live" component={LivePage} />
+        <Route path="/work" component={WorkPage} />
         <Route path="/search" component={SearchPage} />
         <Route path="/setup" component={SetupPage} />
-        <Redirect path="/" to="/live" />
+        <Redirect path="/" to="/work" />
       </Switch>
     );
   }

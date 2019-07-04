@@ -17,7 +17,6 @@ const Root = () => (
       <PreLoader>
         <Switch>
           <Route path="/login" component={LoginPage} />
-          <PrivateRoute path="/help" component={HelpPage} />
           <PrivateRoute component={MainPage} />
         </Switch>
       </PreLoader>

@@ -10,6 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Root from './Root';
+import filrebaseConfig from './firebase/config';
 
 const initAxios = () => {
   const baseURL = process.env.NODE_ENV !== 'production' ? 'http://192.168.123.232' : '';
@@ -17,5 +18,6 @@ const initAxios = () => {
 };
 
 initAxios();
+filrebaseConfig();
 
 ReactDOM.render(<Root />, document.getElementById('root'));

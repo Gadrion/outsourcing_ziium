@@ -10,5 +10,7 @@ export const LoginTemplateStyled = styled.div`
 
 export const LoginFormStyled = styled.div`
   width: 100%;
-  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

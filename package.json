@@ -5,6 +5,7 @@
   "description": "NVR Webviewer",
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@material-ui/core": "^3.9.3",
     "@svgr/webpack": "4.1.0",
     "@trendmicro/react-paginations": "^0.6.1",
     "@trendmicro/react-table": "^1.0.1-alpha.2",
@@ -35,10 +36,13 @@
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-react": "7.12.4",
     "file-loader": "2.0.0",
+    "firebase": "^5.10.1",
+    "firebase-admin": "^7.3.0",
     "fs-extra": "7.0.1",
     "fullcalendar": "^4.0.0-alpha.2",
     "history": "^4.7.2",
     "html-webpack-plugin": "4.0.0-alpha.2",
+    "http2": "^3.3.7",
     "identity-obj-proxy": "3.0.0",
     "immutable": "^3.8.2",
     "jest": "23.6.0",
@@ -105,7 +109,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "make-sass-doc": "sassdoc src/wisenet-ui/styles",
-    "lint:css": "stylelint ./src/**/*.jsx"
+    "lint:css": "stylelint ./src/**/*.jsx",
+    "serve": "node scripts/build.js && firebase serve",
+    "deploy": "node scripts/build.js && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"

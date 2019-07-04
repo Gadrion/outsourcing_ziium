@@ -2,56 +2,47 @@ import {
   take,
   put,
   all,
+  call,
 } from 'redux-saga/effects';
-import { Auth, Http } from 'util/lib';
+import { eventChannel } from 'redux-saga';
+import * as firebase from 'firebase';
 import * as loginActions from 'store/modules/login/loginModule';
 
-const url = '/index.php';
-// const url = '/stw-cgi/system.cgi?msubmenu=deviceinfo&action=view';
+const authStateChanged = () => (
+  eventChannel(emit => (
+    firebase.auth().onAuthStateChanged(userInfo => emit({ userInfo }))
+  ))
+);
 
 function* asyncLoginSaga() {
   while (true) {
-    const action = yield take(loginActions.LOGIN);
+    yield take(loginActions.LOGIN);
+    const authProvier = new firebase.auth.GoogleAuthProvider();
+    const auth = firebase.auth();
+
     yield put(loginActions.loginPendding(true));
+
     try {
-      yield Http.post({
-        url,
-        ...action.payload,
-      });
+      const authChannel = yield call(authStateChanged);
+      const { userInfo } = yield take(authChannel);
 
-      Auth.makeAuthData(action.payload);
-      yield put(loginActions.loginSuccess());
-      Auth.loginSuccess();
-      action.payload.history.push('/live');
-    } catch (error) {
-      if (typeof error.response === 'undefined') {
-        yield put(loginActions.loginFailure({ errorCode: null }));
-        Auth.loginFailed();
+      if (!userInfo) {
+        const loginInfo = yield auth.signInWithPopup(authProvier);
+        yield put(loginActions.loginFailure({
+          userInfo: loginInfo,
+        }));
       } else {
-        const {
-          userid,
-          password,
-          history,
-        } = action.payload;
+        const adminData = yield firebase.database().ref('admin').once('value');
+        const adminList = Object.keys(adminData.val());
 
-        const authData = {
-          header: error.response.headers,
-          userid,
-          password,
-        };
-
-        Auth.makeAuthData(authData);
-
-        try {
-          yield Http.post({ url });
-          yield put(loginActions.loginSuccess());
-          Auth.loginSuccess();
-          history.push('/live');
-        } catch (_) {
-          yield put(loginActions.loginFailure({ errorCode: error.response.status }));
-          Auth.loginFailed();
-        }
+        const isAdmin = adminList.find(admin => admin === userInfo.email.split('@')[0]);
+        yield put(loginActions.loginSuccess({
+          userInfo,
+          isAdmin: !!isAdmin,
+        }));
       }
+    } catch (error) {
+      console.log('error', error);
     }
   }
 }
