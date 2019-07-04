@@ -6,6 +6,7 @@ import * as themes from 'wisenet-ui/styles/themes';
 import { LoginActions } from 'store/actionCreators';
 import { WorkPageContainer } from 'containers/pages';
 import * as firebase from 'firebase';
+import Button from '@material-ui/core/Button';
 
 class WorkPage extends React.Component {
 
@@ -26,9 +27,12 @@ class WorkPage extends React.Component {
     const { children, theme } = this.props;
     return (
       <ThemeProvider theme={themes[theme]}>
-        <React.Fragment>
-          {children}
-        </React.Fragment>
+        <Button
+          variant="contained"
+          color="primary"
+        >
+          {'Hello World'}
+        </Button>
       </ThemeProvider>
     );
   }
