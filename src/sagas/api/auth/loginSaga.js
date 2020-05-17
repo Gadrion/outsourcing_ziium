@@ -16,32 +16,41 @@ const authStateChanged = () => (
 
 function* asyncLoginSaga() {
   while (true) {
-    yield take(loginActions.LOGIN);
+    const { payload: { id, password } } = yield take(loginActions.LOGIN);
     const authProvier = new firebase.auth.GoogleAuthProvider();
     const auth = firebase.auth();
 
     yield put(loginActions.loginPendding(true));
 
     try {
-      const authChannel = yield call(authStateChanged);
-      const { userInfo } = yield take(authChannel);
+      const result = yield firebase.auth().signInWithEmailAndPassword(id, password);
+      console.log('result', result);
+      sessionStorage.setItem('id', id);
+      sessionStorage.setItem('password', btoa(password));
+      sessionStorage.setItem('isLogin', true);
 
-      if (!userInfo) {
-        const loginInfo = yield auth.signInWithPopup(authProvier);
-        yield put(loginActions.loginFailure({
-          userInfo: loginInfo,
-        }));
-      } else {
-        const adminData = yield firebase.database().ref('admin').once('value');
-        const adminList = Object.keys(adminData.val());
+      yield put(loginActions.loginSuccess());
+      // const authChannel = yield call(authStateChanged);
+      // const { userInfo } = yield take(authChannel);
 
-        const isAdmin = adminList.find(admin => admin === userInfo.email.split('@')[0]);
-        yield put(loginActions.loginSuccess({
-          userInfo,
-          isAdmin: !!isAdmin,
-        }));
-      }
+      // if (!userInfo) {
+      //   const loginInfo = yield auth.signInWithPopup(authProvier);
+      //   yield put(loginActions.loginFailure({
+      //     userInfo: loginInfo,
+      //   }));
+      // } else {
+      //   const adminData = yield firebase.database().ref('admin').once('value');
+      //   const adminList = Object.keys(adminData.val());
+
+      //   const isAdmin = adminList.find(admin => admin === userInfo.email.split('@')[0]);
+      //   yield put(loginActions.loginSuccess({
+      //     userInfo,
+      //     isAdmin: !!isAdmin,
+      //   }));
+      // }
     } catch (error) {
+      sessionStorage.clear('isLogin');
+      yield put(loginActions.loginFailure({ error }));
       console.log('error', error);
     }
   }

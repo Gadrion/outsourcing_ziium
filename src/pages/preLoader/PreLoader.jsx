@@ -16,33 +16,33 @@ class PreLoader extends React.Component {
   constructor(props) {
     super(props);
 
-    LoginActions.login();
+    // LoginActions.login();
   }
 
-  getTest = () => {
-    // const memeRef = this.database.ref('\"test\"/');
-    // const memeRef = this.database.ref('admin');
-    const memeRef = firebase.database().ref('admin');
-    console.log('memeRef', memeRef);
-    memeRef.on('child_added', data => {
-      console.log('data', data.val());
-    });
-    firebase.database().ref('admin').once('value', data => {
-      console.log('data value', data.val());
-    });
-    memeRef.on('child_changed', data => {
-      console.log('child_changed', data.val());
-    });
-  }
+  // getTest = () => {
+  //   // const memeRef = this.database.ref('\"test\"/');
+  //   // const memeRef = this.database.ref('admin');
+  //   const memeRef = firebase.database().ref('admin');
+  //   console.log('memeRef', memeRef);
+  //   memeRef.on('child_added', data => {
+  //     console.log('data', data.val());
+  //   });
+  //   firebase.database().ref('admin').once('value', data => {
+  //     console.log('data value', data.val());
+  //   });
+  //   memeRef.on('child_changed', data => {
+  //     console.log('child_changed', data.val());
+  //   });
+  // }
 
-  setTest = () => {
-    const memeRef = this.database.ref('\"test\"/');
-    console.log('key', memeRef.push().key);
-    memeRef.update({
-      // test: 'fuck',
-      test2: 'fuck',
-    });
-  }
+  // setTest = () => {
+  //   const memeRef = this.database.ref('\"test\"/');
+  //   console.log('key', memeRef.push().key);
+  //   memeRef.update({
+  //     // test: 'fuck',
+  //     test2: 'fuck',
+  //   });
+  // }
 
   render() {
     const { children, theme } = this.props;

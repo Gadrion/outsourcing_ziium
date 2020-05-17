@@ -17,7 +17,7 @@ export const loginFailure = createAction(LOGIN_FAILURE);
 const initialState = Map({
   pendding: false,
   isAdmin: false,
-  isLogin: false,
+  isLogin: sessionStorage.getItem('isLogin') ? true : false,
   userInfo: {},
   error: '',
 });
@@ -25,17 +25,15 @@ const initialState = Map({
 // reducer
 export default handleActions({
   [LOGIN_PENDDING]: (state, action) => state.set('pendding', action.payload),
-  [LOGIN_SUCCESS]: (state, { payload: { userInfo, isAdmin } }) => (
+  [LOGIN_SUCCESS]: (state) => (
     state
       .set('pendding', false)
       .set('isLogin', true)
-      .set('isAdmin', isAdmin)
-      .set('userInfo', userInfo)
   ),
-  [LOGIN_FAILURE]: (state, { payload: { userInfo } }) => (
+  [LOGIN_FAILURE]: (state, { payload: { error } }) => (
     state
       .set('pendding', false)
       .set('isLogin', false)
-      .set('userInfo', userInfo)
+      .set('error', error)
   ),
 }, initialState);
