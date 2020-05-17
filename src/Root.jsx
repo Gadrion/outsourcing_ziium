@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import { PrivateRoute } from 'routes';
+import { StylesProvider } from "@material-ui/core/styles";
 import {
   LoginPage,
   HelpPage,
@@ -12,14 +13,15 @@ import {
 
 const Root = () => (
   <Provider store={store}>
-    {/* <BrowserRouter basename="/gdjung/NVR_Project/dev/build/index.html"> */}
     <BrowserRouter>
-      <PreLoader>
-        <Switch>
-          <Route path="/login" component={LoginPage} />
-          <PrivateRoute component={MainPage} />
-        </Switch>
-      </PreLoader>
+      <StylesProvider injectFirst>
+        <PreLoader>
+          <Switch>
+            <Route path="/login" component={LoginPage} />
+            <PrivateRoute component={MainPage} />
+          </Switch>
+        </PreLoader>
+      </StylesProvider>
     </BrowserRouter>
   </Provider>
 );

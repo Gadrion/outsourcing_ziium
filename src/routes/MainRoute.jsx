@@ -5,15 +5,10 @@ import {
   SearchPage,
   SetupPage,
 } from 'pages';
-import { LangActions } from 'store/actionCreators';
-// import NavigationBar from 'components/Common';
-// import LiveRoutes from '../containers/pages/Live';
-// import PlaybackRoutes from '../containers/pages/Playback';
-// import SetupRoutes from '../containers/pages/Setup';
+// import { LangActions } from 'store/actionCreators';
 
 class MainRoutes extends React.Component {
   componentDidMount() {
-    LangActions.getCurrentLanguage();
   }
 
   render() {

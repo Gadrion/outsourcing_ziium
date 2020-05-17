@@ -5,14 +5,7 @@ import { PreLoadActions } from 'store/actionCreators';
 
 class PreLoaderContainer extends React.Component {
   componentDidMount() {
-    PreLoadActions.sessionKeyGet();
-  }
-
-  umpScriptOnload = ({ scriptTags }) => {
-    if (scriptTags) {
-      const scriptTag = scriptTags[0];
-      PreLoadActions.fileUmpLoadCheck(scriptTag);
-    }
+    // PreLoadActions.sessionKeyGet();
   }
 
   render() {

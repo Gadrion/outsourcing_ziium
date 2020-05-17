@@ -8,7 +8,7 @@ export const CHANGE_THEME = 'lang/CHANGE_THEME';
 export const changeTheme = createAction(CHANGE_THEME);
 
 const initialState = Map({
-  theme: 'black',
+  theme: 'white',
 });
 
 // reducer

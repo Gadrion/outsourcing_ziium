@@ -9,16 +9,6 @@ import umpPlayMode from 'wisenet-ui/util/static/constants/umpPlayer/umpPlayMode'
 
 const MainPage = ({ onClick, backup, sessionKey }) => (
   <MainContainerStyled>
-    {/* <Header /> */}
-    {/* <button onClick={onClick}>test</button>
-    <VideoTile
-      type={umpPlayMode.BACKUP}
-      channel={1}
-      backup={backup}
-      sessionKey={sessionKey}
-      startTime={'2019-04-15T15:00:00Z'}
-      endTime={'2019-04-15T15:01:00Z'}
-    /> */}
     <MainRoute />
   </MainContainerStyled>
 );
