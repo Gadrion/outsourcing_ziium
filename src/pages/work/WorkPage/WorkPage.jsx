@@ -6,8 +6,10 @@ import * as themes from 'wisenet-ui/styles/themes';
 import { LoginActions } from 'store/actionCreators';
 import { WorkPageContainer } from 'containers/pages';
 import * as firebase from 'firebase';
-import Button from '@material-ui/core/Button';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import {
+  ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled
+} from './WorkPageStyled';
 
 class WorkPage extends React.Component {
   state = {
@@ -15,8 +17,8 @@ class WorkPage extends React.Component {
   };
 
   containerStyle = {
-    width: '400px',
-    height: '400px'
+    width: '100wv',
+    height: '100vh'
   };
 
   center = {
@@ -32,10 +34,6 @@ class WorkPage extends React.Component {
   position2 = {
     lat: 37.772,
     lng: -122.214
-  }
-
-  componentDidMount() {
-    // this.setTest();
   }
 
   onLoad = marker => {
@@ -54,35 +52,52 @@ class WorkPage extends React.Component {
   render() {
     const { children, theme } = this.props;
     const { isOpen } = this.state;
-    const mapStyles = {
-      width: '100%',
-      height: '100%',
-   };
     return (
-      <LoadScript
-        googleMapsApiKey="AIzaSyDwKM1Pfr80o1hSX1C0tnHxplUzuaLe_Gw"
-      >
-        <GoogleMap
-          mapContainerStyle={this.containerStyle}
-          center={this.center}
-          zoom={10}
+      <>
+        <LoadScript
+          googleMapsApiKey="AIzaSyDwKM1Pfr80o1hSX1C0tnHxplUzuaLe_Gw"
         >
-          { /* Child components, such as markers, info windows, etc. */ }
-          <Marker
-            onLoad={this.onLoad}
-            position={this.position}
-            label='qweqwq'
-            onClick={this.onClick}
+          <GoogleMap
+            mapContainerStyle={this.containerStyle}
+            center={this.center}
+            zoom={10}
+            onClick={e => console.log('e', e)}
+            options={{
+              fullscreenControl: false,
+            }}
           >
-            {isOpen && <InfoWindow anchor={this.marker}>
-              <div>
-                qweqwq
-                {/* <Button>qweqwe</Button> */}
-              </div>
-            </InfoWindow>}
-          </Marker>
-        </GoogleMap>
-      </LoadScript>
+            { /* Child components, such as markers, info windows, etc. */ }
+            <Marker
+              onLoad={this.onLoad}
+              position={this.position}
+              label='qweqwq'
+              onClick={this.onClick}
+            >
+              {isOpen && <InfoWindow anchor={this.marker}>
+                <div>
+                  qweqwq
+                  {/* <Button>qweqwe</Button> */}
+                </div>
+              </InfoWindow>}
+            </Marker>
+          </GoogleMap>
+        </LoadScript>
+        <LogoutAreaStyled>
+          <ButtonStyled variant="outlined">로그아웃</ButtonStyled>
+        </LogoutAreaStyled>
+        <TopCenterAreaStyled>
+          <ButtonStyled variant="outlined">물건추가</ButtonStyled>
+          <ButtonStyled variant="outlined">위치검색</ButtonStyled>
+        </TopCenterAreaStyled>
+        <TopRightAreaStyled>
+          <ButtonStyled variant="outlined">전체</ButtonStyled>
+          <ButtonStyled variant="outlined">신축</ButtonStyled>
+          <ButtonStyled variant="outlined">구옥</ButtonStyled>
+        </TopRightAreaStyled>
+        <LeftBottomAreaStyled>
+          <ButtonStyled variant="outlined">물건검색</ButtonStyled>
+        </LeftBottomAreaStyled>
+      </>
     );
   }
 }
