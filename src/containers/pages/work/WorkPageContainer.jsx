@@ -4,8 +4,44 @@ import PropTypes from 'prop-types';
 import { PreLoadActions } from 'store/actionCreators';
 
 class WorkPageContainer extends React.Component {
-  componentDidMount() {
-    
+  state = {
+    addItemFocus: false,
+    viewType: 'all',
+  }
+
+  onClick = type => event => {
+    switch (type) {
+      case 'logout':
+        break;
+      case 'addItem': {
+        const { addItemFocus } = this.state;
+        this.setState({ addItemFocus: !addItemFocus });
+        break;
+      }
+      case 'positionSearch':
+        break;
+      case 'all':
+      case 'newItem':
+      case 'oldItem': {
+        const { viewType } = this.state;
+        if (viewType !== type) {
+          this.setState({
+            viewType: type,
+          })
+        }
+        break;
+      }
+      case 'itemSearch':
+        break;
+      case 'map': {
+        const { addItemFocus } = this.state;
+        if (addItemFocus) {
+          console.log('event', event.latLng.lat());
+          console.log('event', event.latLng.lng());
+        }
+        break;
+      }
+    }
   }
 
   render() {

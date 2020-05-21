@@ -50,7 +50,7 @@ class WorkPage extends React.Component {
   }
 
   render() {
-    const { children, theme } = this.props;
+    const { onClick, viewType, addItemFocus } = this.props;
     const { isOpen } = this.state;
     return (
       <>
@@ -61,7 +61,7 @@ class WorkPage extends React.Component {
             mapContainerStyle={this.containerStyle}
             center={this.center}
             zoom={10}
-            onClick={e => console.log('e', e)}
+            onClick={onClick('map')}
             options={{
               fullscreenControl: false,
             }}
@@ -83,19 +83,19 @@ class WorkPage extends React.Component {
           </GoogleMap>
         </LoadScript>
         <LogoutAreaStyled>
-          <ButtonStyled variant="outlined">로그아웃</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('logout')}>로그아웃</ButtonStyled>
         </LogoutAreaStyled>
         <TopCenterAreaStyled>
-          <ButtonStyled variant="outlined">물건추가</ButtonStyled>
-          <ButtonStyled variant="outlined">위치검색</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('addItem')} checkType={addItemFocus}>물건추가</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('positionSearch')}>위치검색</ButtonStyled>
         </TopCenterAreaStyled>
         <TopRightAreaStyled>
-          <ButtonStyled variant="outlined">전체</ButtonStyled>
-          <ButtonStyled variant="outlined">신축</ButtonStyled>
-          <ButtonStyled variant="outlined">구옥</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('all')} checkType={viewType === 'all'}>전체</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('newItem')} checkType={viewType === 'newItem'}>신축</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('oldItem')} checkType={viewType === 'oldItem'}>구옥</ButtonStyled>
         </TopRightAreaStyled>
         <LeftBottomAreaStyled>
-          <ButtonStyled variant="outlined">물건검색</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
         </LeftBottomAreaStyled>
       </>
     );

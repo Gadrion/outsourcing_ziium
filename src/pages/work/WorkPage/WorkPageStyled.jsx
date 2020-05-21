@@ -3,12 +3,12 @@ import Button from '@material-ui/core/Button';
 
 export const ButtonStyled = styled(Button)`
 	height: 40px;
-	background-color: white;
 	font-size: 17px;
 	&:hover {
-    background-color: #efecec;
+    background-color: ${props => props.checkType ? '#b8e0ec' : '#efecec'};
     border: 1px solid #efecec;
-  }
+	}
+	background-color: ${props => props.checkType ? '#b8e0ec' : 'white'}
 `;
 
 export const LogoutAreaStyled = styled.div`
