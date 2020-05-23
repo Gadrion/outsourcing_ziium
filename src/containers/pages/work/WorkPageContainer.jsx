@@ -1,12 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PreLoadActions } from 'store/actionCreators';
+import { MapActions } from 'store/actionCreators';
 
 class WorkPageContainer extends React.Component {
   state = {
     addItemFocus: false,
     viewType: 'all',
+  }
+
+  componentDidMount() {
+    MapActions.getCurrentLocation();
   }
 
   onClick = type => event => {
@@ -36,8 +40,9 @@ class WorkPageContainer extends React.Component {
       case 'map': {
         const { addItemFocus } = this.state;
         if (addItemFocus) {
-          console.log('event', event.latLng.lat());
-          console.log('event', event.latLng.lng());
+          const lat = event.latLng.lat();
+          const lng = event.latLng.lng();
+          MapActions.getMapGeocode({ lat, lng });
         }
         break;
       }
@@ -61,6 +66,9 @@ WorkPageContainer.propTypes = {
 export default connect(
   state => ({
     theme: state.themeModule.get('theme'),
+    currentPosion: state.mapModule.get('currentPosion'),
+    modifyMapList: state.mapModule.get('modifyMapList'),
+    load: state.mapModule.get('load'),
   }),
   () => ({}),
 )(WorkPageContainer);

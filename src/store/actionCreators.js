@@ -23,6 +23,8 @@ import * as systemInfomationActions from './modules/system/systemInfomationModul
 import * as layoutActions from './modules/page/layoutModule';
 import * as liveRecordStatusActions from './modules/liveRecordStatus/liveRecordStatusModule';
 
+import * as mapActions from './modules/firebase/mapModule';
+
 const { dispatch } = store;
 
 export const LoginActions = bindActionCreators(loginActions, dispatch);
@@ -47,3 +49,5 @@ export const PostLoadActions = bindActionCreators(postLoadActions, dispatch);
 export const SystemInfomationActions = bindActionCreators(systemInfomationActions, dispatch);
 export const LayoutActions = bindActionCreators(layoutActions, dispatch);
 export const LiveRecordStatusActions = bindActionCreators(liveRecordStatusActions, dispatch);
+
+export const MapActions = bindActionCreators(mapActions, dispatch);

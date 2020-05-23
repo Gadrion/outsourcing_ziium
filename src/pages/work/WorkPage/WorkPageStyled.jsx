@@ -5,10 +5,10 @@ export const ButtonStyled = styled(Button)`
 	height: 40px;
 	font-size: 17px;
 	&:hover {
-    background-color: ${props => props.checkType ? '#b8e0ec' : '#efecec'};
+    background-color: ${props => props.checkViewType ? '#b8e0ec' : '#efecec'};
     border: 1px solid #efecec;
 	}
-	background-color: ${props => props.checkType ? '#b8e0ec' : 'white'}
+	background-color: ${props => props.checkViewType ? '#b8e0ec' : 'white'}
 `;
 
 export const LogoutAreaStyled = styled.div`
@@ -33,4 +33,12 @@ export const TopRightAreaStyled = styled.div`
 export const LeftBottomAreaStyled = styled.div`
 	position: absolute;
 	bottom: 0;
+`;
+
+export const PendingDiv = styled.div`
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background: lightgray;
+	opacity: 0.6;
 `;
