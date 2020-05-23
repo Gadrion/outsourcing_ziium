@@ -1,12 +1,17 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
-  Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField,
+  Container, Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const StatusSelect = () => (
-  <>구현 중</>
+  <div>
+    <Link to="/home">home</Link>
+    <span>{`생성 (${'sample'})`}</span>
+    <span>{`수정 (${'sample'})`}</span>
+  </div>
 );
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +67,7 @@ const StuffForm = () => {
   ];
 
   return (
-    <Box width="75%">
+    <Container maxWidth="lg">
       <Grid container direction="column">
         {controls.map(control => (
           <Box width={1}>
@@ -75,7 +80,7 @@ const StuffForm = () => {
                 <Grid item xs={4} spacing={3}>
                   {control.label}
                 </Grid>
-                <Grid item xs={8} spacing={3}>
+                <Grid item xs={8} spacing={3} alignItems="flex-start">
                   {control.control}
                 </Grid>
               </Grid>
@@ -83,7 +88,7 @@ const StuffForm = () => {
           </Box>
         ))}
       </Grid>
-    </Box>
+    </Container>
   );
 };
 
