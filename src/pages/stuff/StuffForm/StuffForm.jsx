@@ -1,10 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { func, instanceOf, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Container, Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { withContainer } from 'wisenet-ui/util/hoc';
+
+import StuffFormContainer from './StuffFormContainer';
 import ImageSelector from '../ImageSelector/ImageSelector';
 
 const StatusSelect = () => (
@@ -26,15 +30,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const StuffForm = () => {
-  const classes = useStyles();
+const options = ['1룸', '1.5룸', '2룸', '3룸', '4룸', '복층', '테라스', '월세', '전세', '구옥'];
 
-  const name = '';
-  const memo = '';
-  const options = ['1룸', '1.5룸', '2룸', '3룸', '4룸', '복층', '테라스', '월세', '전세', '구옥'];
+const StuffForm = ({
+  name, memo, option, files, _onChange,
+}) => {
+  const classes = useStyles();
+  const optionKeys = Object.keys(option);
 
   const controls = [
-    { label: '물건명', control: (<TextField defaultValue={name} variant="filled" fullWidth />) },
+    { label: '물건명', control: (<TextField defaultValue={name} variant="filled" fullWidth onChange={_onChange('name')} />) },
     { label: '상태', control: (<StatusSelect />) },
     {
       label: '메모',
@@ -45,6 +50,7 @@ const StuffForm = () => {
         defaultValue={memo}
         variant="filled"
         fullWidth
+        onChange={_onChange('memo')}
       />
       ),
     },
@@ -52,11 +58,13 @@ const StuffForm = () => {
       label: '옵션',
       control: (
         <FormGroup row>
-          {options.map(option => (
+          {options.map(op => (
             <FormControlLabel
-              key={option}
-              control={(<Checkbox name={option} color="primary" />)}
-              label={option}
+              key={op}
+              control={(
+                <Checkbox name={op} color="primary" onChange={_onChange('option')} checked={optionKeys.includes(op)} />
+              )}
+              label={op}
             />
           ))}
         </FormGroup>
@@ -64,7 +72,7 @@ const StuffForm = () => {
     },
     {
       label: '사진',
-      control: (<ImageSelector />),
+      control: (<ImageSelector files={files} onChange={_onChange('images')} />),
     },
   ];
 
@@ -94,4 +102,12 @@ const StuffForm = () => {
   );
 };
 
-export default StuffForm;
+StuffForm.propTypes = {
+  name: string.isRequired,
+  memo: string.isRequired,
+  option: instanceOf(Object).isRequired,
+  files: instanceOf(Object).isRequired,
+  _onChange: func.isRequired,
+};
+
+export default withContainer(StuffFormContainer, StuffForm);

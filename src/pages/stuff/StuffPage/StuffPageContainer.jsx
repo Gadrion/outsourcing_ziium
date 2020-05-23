@@ -12,6 +12,7 @@ class SutffPageContainer extends React.Component {
   _onClick = eventName => () => {
     switch (eventName) {
       case 'save': {
+        // get data
         // add redux action code
         break;
       }
@@ -29,6 +30,7 @@ class SutffPageContainer extends React.Component {
       }
       default:
         console.warn(eventName, 'is undefined onClick Event');
+        // eslint-disable-next-line no-alert
         alert('미구현'); // temp
         break;
     }
