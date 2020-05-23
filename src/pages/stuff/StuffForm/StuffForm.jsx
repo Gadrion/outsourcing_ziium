@@ -54,6 +54,7 @@ const StuffForm = () => {
         <FormGroup row>
           {options.map(option => (
             <FormControlLabel
+              key={option}
               control={(<Checkbox name={option} color="primary" />)}
               label={option}
             />
@@ -71,17 +72,17 @@ const StuffForm = () => {
     <Container maxWidth="lg">
       <Grid container direction="column">
         {controls.map(control => (
-          <Box width={1}>
+          <Box width={1} key={control.label}>
             <Paper className={classes.paper}>
               <Grid
                 container
                 justify="center"
                 alignItems="center"
               >
-                <Grid item xs={4} spacing={3}>
+                <Grid item xs={4}>
                   {control.label}
                 </Grid>
-                <Grid item xs={8} spacing={3} alignItems="flex-start">
+                <Grid item xs={8}>
                   {control.control}
                 </Grid>
               </Grid>

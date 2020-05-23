@@ -7,9 +7,10 @@ import { withContainer } from 'wisenet-ui/util/hoc';
 import SutffFormPageContainer from './StuffPageContainer';
 import SutffForm from '../StuffForm/StuffForm';
 import Edge from '../Edge/Edge';
+import { StuffPageStyled } from './StuffPageStyled';
 
-export const SutffFormPage = ({ _onClick }) => (
-  <div>
+export const SutffFormPage = ({ _onClick, setRootElem }) => (
+  <StuffPageStyled ref={setRootElem}>
     <SutffForm />
     <Edge left bottom>
       <ButtonGroup orientation="vertical" color="default" variant="contained">
@@ -27,11 +28,12 @@ export const SutffFormPage = ({ _onClick }) => (
         <Button onClick={_onClick('copy')}>구옥 복사</Button>
       </ButtonGroup>
     </Edge>
-  </div>
+  </StuffPageStyled>
 );
 
 SutffFormPage.propTypes = {
   _onClick: func.isRequired,
+  setRootElem: func.isRequired,
 };
 
 export default withContainer(SutffFormPageContainer, SutffFormPage);

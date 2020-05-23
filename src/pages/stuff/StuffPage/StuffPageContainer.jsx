@@ -5,6 +5,10 @@ class SutffPageContainer extends React.Component {
   state = {
   };
 
+  setRootElem = elem => {
+    this.ref = elem;
+  }
+
   _onClick = eventName => () => {
     switch (eventName) {
       case 'save': {
@@ -12,10 +16,15 @@ class SutffPageContainer extends React.Component {
         break;
       }
       case 'gotoTop': {
-        window.scrollTo(0, 0);
+        if (this.ref) {
+          this.ref.scrollTop = 0;
+        }
         break;
       }
       case 'gotoEnd': {
+        if (this.ref) {
+          this.ref.scrollTop = this.ref.scrollHeight;
+        }
         break;
       }
       default:
