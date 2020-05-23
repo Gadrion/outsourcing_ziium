@@ -5,6 +5,7 @@ import {
   Container, Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ImageSelector from '../ImageSelector/ImageSelector';
 
 const StatusSelect = () => (
   <div>
@@ -62,7 +63,7 @@ const StuffForm = () => {
     },
     {
       label: '사진',
-      control: (<></>),
+      control: (<ImageSelector />),
     },
   ];
 
