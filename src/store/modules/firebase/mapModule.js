@@ -6,12 +6,16 @@ export const GET_CURRENT_LOCATION_SUCCESS = 'map/GET_CURRENT_LOCATION_SUCCESS';
 export const GET_CURRENT_LOCATION_FAILURE = 'map/GET_CURRENT_LOCATION_FAILURE';
 export const GET_MAP_GEOCODE = 'map/GET_MAP_GEOCODE';
 export const GET_MAP_GEOCODE_SUCCESS = 'map/GET_MAP_GEOCODE_SUCCESS';
+export const UPDATE_MAP_DATA = 'map/UPDATE_MAP_DATA';
+export const UPDATE_MAP_DATA_SUCCESS = 'map/UPDATE_MAP_DATA_SUCCESS';
 
 export const getCurrentLocation = createAction(GET_CURRENT_LOCATION);
 export const getCurrentLocationSuccess = createAction(GET_CURRENT_LOCATION_SUCCESS);
 export const getCurrentLocationFailure = createAction(GET_CURRENT_LOCATION_FAILURE);
 export const getMapGeocode = createAction(GET_MAP_GEOCODE);
 export const getMapGeocodeSuccess = createAction(GET_MAP_GEOCODE_SUCCESS);
+export const updateMapData = createAction(UPDATE_MAP_DATA);
+export const updateMapDataSuccess = createAction(UPDATE_MAP_DATA_SUCCESS);
   
   const initialState = Map({
 		modifyMapList: [],

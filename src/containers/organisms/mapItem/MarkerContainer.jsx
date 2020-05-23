@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MapActions } from 'store/actionCreators';
 
 class MarkerContainer extends Component {
 	state = {
@@ -11,12 +12,33 @@ class MarkerContainer extends Component {
 		console.log('marker: ', marker);
 	}
 
-	onClick = marker => {
-		console.log('marker: ', marker);
-		const { isOpen } = this.state;
-		this.setState({
-				isOpen: !isOpen,
-		});
+	onClick = type => event => {
+		switch(type) {
+			case 'marker': {
+				console.log('marker: ', event);
+				const { isOpen } = this.state;
+				this.setState({
+						isOpen: !isOpen,
+				});
+				break;
+			}
+			case 'info': {
+				const {
+					userId, position, address, label, placeId, memo,
+				} = this.props;
+				MapActions.updateMapData({
+					userId,
+					position,
+					address,
+					label,
+					placeId,
+					memo,
+				})
+				break;
+			}
+			case 'delete':
+				break;
+		}
 	}
 
 	render() {

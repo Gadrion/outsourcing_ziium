@@ -33,14 +33,18 @@ class WorkPage extends React.Component {
             <FirebaseDatabaseNode path="map">
               {event => {
                 console.log('event', event);
+                const mapDataList = event.value;
                 return (
-                  <div>qwew</div>
-                )
+                  mapDataList ? (
+                    Object.keys(mapDataList).map(
+                      mapDataKey => <Marker key={mapDataList[mapDataKey].placeId} {...mapDataList[mapDataKey]} />)
+                  ) : <></>
+                );
               }}
             </FirebaseDatabaseNode>
             {/* 수정중인 맵 리스트 */}
-            {modifyMapList.map(({ position, placeId }) => (
-              <Marker position={position} key={placeId} />
+            {modifyMapList.map((mapData) => (
+              <Marker key={mapData.placeId} {...mapData} />
             ))}
           </GoogleMap>
         </LoadScript>
