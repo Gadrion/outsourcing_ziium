@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { func, instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import { StuffActions } from 'store/actionCreators';
@@ -8,6 +9,23 @@ class SutffFormContainer extends React.Component {
 
   setRootElem = elem => {
     this.ref = elem;
+  }
+
+  _onClick = eventName => () => {
+    const { history } = this.props;
+
+    switch (eventName) {
+      case 'location': {
+        history.push('/work');
+        break;
+      }
+
+      default:
+        console.warn(eventName, 'is undefined onClick Event');
+        // eslint-disable-next-line no-alert
+        alert('미구현'); // temp
+        break;
+    }
   }
 
   _onChange = eventName => (...params) => {
@@ -51,6 +69,7 @@ class SutffFormContainer extends React.Component {
 SutffFormContainer.propTypes = {
   render: func.isRequired,
   option: instanceOf(Object).isRequired,
+  history: instanceOf(Object).isRequired,
 };
 
 export default connect(({ stuffModule }) => ({
@@ -59,4 +78,4 @@ export default connect(({ stuffModule }) => ({
   option: stuffModule.get('option'),
   files: stuffModule.get('files'),
 }),
-() => ({}))(SutffFormContainer);
+() => ({}))(withRouter(SutffFormContainer));

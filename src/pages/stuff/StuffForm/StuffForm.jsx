@@ -1,8 +1,7 @@
 import React from 'react';
 import { func, instanceOf, string } from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
-  Container, Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField,
+  Container, Grid, Box, Paper, FormGroup, FormControlLabel, Checkbox, TextField, Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -11,13 +10,17 @@ import { withContainer } from 'wisenet-ui/util/hoc';
 import StuffFormContainer from './StuffFormContainer';
 import ImageSelector from '../ImageSelector/ImageSelector';
 
-const StatusSelect = () => (
+const StatusSelect = ({ onClick }) => (
   <div>
-    <Link to="/home">home</Link>
+    <Button onClick={onClick}>변경</Button>
     <span>{`생성 (${'sample'})`}</span>
     <span>{`수정 (${'sample'})`}</span>
   </div>
 );
+
+StatusSelect.propTypes = {
+  onClick: func.isRequired,
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,14 +36,14 @@ const useStyles = makeStyles(theme => ({
 const options = ['1룸', '1.5룸', '2룸', '3룸', '4룸', '복층', '테라스', '월세', '전세', '구옥'];
 
 const StuffForm = ({
-  name, memo, option, files, _onChange,
+  name, memo, option, files, _onChange, _onClick,
 }) => {
   const classes = useStyles();
   const optionKeys = Object.keys(option);
 
   const controls = [
     { label: '물건명', control: (<TextField defaultValue={name} variant="filled" fullWidth onChange={_onChange('name')} />) },
-    { label: '상태', control: (<StatusSelect />) },
+    { label: '상태', control: (<StatusSelect onClick={_onClick('location')} />) },
     {
       label: '메모',
       control: (<TextField
@@ -108,6 +111,7 @@ StuffForm.propTypes = {
   option: instanceOf(Object).isRequired,
   files: instanceOf(Object).isRequired,
   _onChange: func.isRequired,
+  _onClick: func.isRequired,
 };
 
 export default withContainer(StuffFormContainer, StuffForm);
