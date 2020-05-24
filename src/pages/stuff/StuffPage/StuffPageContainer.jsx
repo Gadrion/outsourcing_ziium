@@ -1,5 +1,6 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { connect } from 'react-redux';
+import { func, number, instanceOf } from 'prop-types';
 
 import { StuffActions } from 'store/actionCreators';
 
@@ -12,10 +13,19 @@ class SutffPageContainer extends React.Component {
   }
 
   _onClick = eventName => () => {
+    const { id, history } = this.props;
     switch (eventName) {
       case 'save': {
         // add redux action code
         StuffActions.updateForm();
+        break;
+      }
+      case 'delete': {
+        StuffActions.deleteForm(id);
+        break;
+      }
+      case 'close': {
+        history.push('/work');
         break;
       }
       case 'gotoTop': {
@@ -44,8 +54,17 @@ class SutffPageContainer extends React.Component {
   }
 }
 
-SutffPageContainer.propTypes = {
-  render: func.isRequired,
+SutffPageContainer.defaultProps = {
+  id: null,
 };
 
-export default SutffPageContainer;
+SutffPageContainer.propTypes = {
+  render: func.isRequired,
+  id: number,
+  history: instanceOf(Object).isRequired,
+};
+
+export default connect(({ stuffModule }) => ({
+  id: stuffModule.get('id'),
+}),
+() => ({}))(SutffPageContainer);
