@@ -7,6 +7,33 @@ import { StuffActions } from 'store/actionCreators';
 class SutffFormContainer extends React.Component {
   state = {};
 
+  options = [
+    { key: 'room1', label: '1룸' },
+    { key: 'room15', label: '1.5룸' },
+    { key: 'room2', label: '2룸' },
+    { key: 'room3', label: '3룸' },
+    { key: 'room4', label: '4룸' },
+    { key: 'duplex', label: '복층' },
+    { key: 'terrace', label: '테라스' },
+    { key: 'monthly', label: '월세' },
+    { key: 'charter', label: '전세' },
+    { key: 'imprisonment', label: '구옥' },
+  ];
+
+  constructor(props) {
+    super(props);
+    const { option } = props;
+
+    const newOption = this.options.reduce((acc, { key }) => {
+      if (acc[key] == null) {
+        acc[key] = false;
+      }
+      return acc;
+    }, { ...option });
+    StuffActions.setForm({ option: newOption });
+
+  }
+
   setRootElem = elem => {
     this.ref = elem;
   }
@@ -36,17 +63,16 @@ class SutffFormContainer extends React.Component {
         StuffActions.setForm({ [eventName]: value });
         break;
       }
+
       case 'option': {
-        const [{ target: { name, checked } }] = params;
         const { option } = this.props;
-        if (checked) {
-          option[name] = true;
-        } else {
-          delete option[name];
-        }
+        const [{ target: { name, checked } }] = params;
+
+        option[name] = checked;
         StuffActions.setForm({ option: { ...option } });
         break;
       }
+
       case 'images': {
         const limit = 10;
         const [files] = params;
@@ -84,5 +110,4 @@ export default connect(({ stuffModule }) => ({
   memo: stuffModule.get('memo'),
   option: stuffModule.get('option'),
   files: stuffModule.get('files'),
-}),
-() => ({}))(withRouter(SutffFormContainer));
+}), () => ({}))(withRouter(SutffFormContainer));

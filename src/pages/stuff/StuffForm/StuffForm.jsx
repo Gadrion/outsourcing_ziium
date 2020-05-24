@@ -33,13 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const options = ['1룸', '1.5룸', '2룸', '3룸', '4룸', '복층', '테라스', '월세', '전세', '구옥'];
-
 const StuffForm = ({
-  name, memo, option, files, _onChange, _onClick,
+  name, memo, option, options, files, _onChange, _onClick,
 }) => {
   const classes = useStyles();
-  const optionKeys = Object.keys(option);
 
   const controls = [
     { label: '물건명', control: (<TextField value={name} variant="filled" fullWidth onChange={_onChange('name')} />) },
@@ -61,13 +58,13 @@ const StuffForm = ({
       label: '옵션',
       control: (
         <FormGroup row>
-          {options.map(op => (
+          {options.map(({ key, label }) => (
             <FormControlLabel
-              key={op}
+              key={key}
               control={(
-                <Checkbox name={op} color="primary" onChange={_onChange('option')} checked={optionKeys.includes(op)} />
+                <Checkbox name={key} color="primary" onChange={_onChange('option')} checked={!!option[key]} />
               )}
-              label={op}
+              label={label}
             />
           ))}
         </FormGroup>
@@ -109,6 +106,7 @@ StuffForm.propTypes = {
   name: string.isRequired,
   memo: string.isRequired,
   option: instanceOf(Object).isRequired,
+  options: instanceOf(Object).isRequired,
   files: instanceOf(Object).isRequired,
   _onChange: func.isRequired,
   _onClick: func.isRequired,

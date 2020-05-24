@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number } from 'prop-types';
+import { func } from 'prop-types';
 import { ButtonGroup, Button } from '@material-ui/core';
 
 import { withContainer } from 'wisenet-ui/util/hoc';
@@ -10,13 +10,13 @@ import Edge from '../Edge/Edge';
 import { StuffPageStyled } from './StuffPageStyled';
 
 export const SutffFormPage = ({
-  id, _onClick, _onChange, setRootElem,
+  _onClick, _onChange, setRootElem,
 }) => (
   <StuffPageStyled ref={setRootElem}>
     <SutffForm />
     <Edge left bottom>
       <ButtonGroup orientation="vertical" color="default" variant="contained">
-        <Button onClick={_onClick('save')}>저장</Button>
+        {/* <Button onClick={_onClick('save')}>저장</Button> */}
         <Button component="label">
           파일 추가
           <input type="file" style={{ display: 'none' }} onChange={_onChange('file')} multiple />
@@ -27,21 +27,16 @@ export const SutffFormPage = ({
     </Edge>
     <Edge right top>
       <ButtonGroup color="default" variant="contained">
-        <Button onClick={_onClick('delete')} disabled={id == null}>삭제</Button>
+        {/* <Button onClick={_onClick('delete')} disabled={id == null}>삭제</Button> */}
         <Button onClick={_onClick('save')}>저장</Button>
         <Button onClick={_onClick('close')}>닫기</Button>
-        <Button onClick={_onClick('copy')}>구옥 복사</Button>
+        {/* <Button onClick={_onClick('copy')}>구옥 복사</Button> */}
       </ButtonGroup>
     </Edge>
   </StuffPageStyled>
 );
 
-SutffFormPage.defaultProps = {
-  id: null,
-};
-
 SutffFormPage.propTypes = {
-  id: number,
   _onClick: func.isRequired,
   _onChange: func.isRequired,
   setRootElem: func.isRequired,

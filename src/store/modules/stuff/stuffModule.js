@@ -13,7 +13,7 @@ export const deleteForm = createAction(DELETE_CURRENT_FORM);
 const initialState = Map({
   name: '',
   memo: '',
-  option: [],
+  option: {},
   files: [],
 });
 
