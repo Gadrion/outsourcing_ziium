@@ -11,7 +11,7 @@ import {
   // HelpPage,
   MainPage,
   PreLoader,
-  StuffPage,
+  StuffModal,
 } from 'pages';
 
 import * as firebase from 'firebase';
@@ -25,7 +25,7 @@ const Root = () => (
           <PreLoader>
             <Switch>
               <Route path="/login" component={LoginPage} />
-              <Route path="/addStuff" component={StuffPage} />
+              <Route path="/addStuff" component={StuffModal} />
               <PrivateRoute component={MainPage} />
             </Switch>
           </PreLoader>

@@ -4,7 +4,7 @@ import { func, number, instanceOf } from 'prop-types';
 
 import { StuffActions } from 'store/actionCreators';
 
-class SutffPageContainer extends React.Component {
+class SutffModalContainer extends React.Component {
   state = {
   };
 
@@ -85,11 +85,11 @@ class SutffPageContainer extends React.Component {
   }
 }
 
-SutffPageContainer.defaultProps = {
+SutffModalContainer.defaultProps = {
   id: null,
 };
 
-SutffPageContainer.propTypes = {
+SutffModalContainer.propTypes = {
   render: func.isRequired,
   id: number,
   history: instanceOf(Object).isRequired,
@@ -100,4 +100,4 @@ export default connect(({ stuffModule }) => ({
   id: stuffModule.get('id'),
   files: stuffModule.get('files'),
 }),
-() => ({}))(SutffPageContainer);
+() => ({}))(SutffModalContainer);
