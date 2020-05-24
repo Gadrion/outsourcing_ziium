@@ -1,27 +1,27 @@
 import styled from 'styled-components';
 
 export const ThumbStyled = styled.div`
-  display: 'inline-flex';
+  display: inline-flex;
   border-radius: 2;
-  border: '1px solid #eaeaea';
+  border: 1px solid #eaeaea;
   margin-bottom: 8;
   margin-right: 8;
   width: 100;
   height: 100;
   padding: 4;
-  box-sizing: 'border-box';
+  box-sizing: border-box;
 `;
 
 export const ThumbInner = styled.div`
-  display: 'flex';
+  display: flex;
   min-width: 0;
-  overflow: 'hidden';
+  overflow: hidden;
 `;
 
 export const ImageStyled = styled.img`
-  display: 'block';
-  width: 'auto';
-  height: '100%';
+  display: block;
+  width: 100%;
+  height: auto;
 `;
 
 export const ThumbRootStlyed = styled.aside`

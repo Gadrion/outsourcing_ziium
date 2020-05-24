@@ -2,17 +2,11 @@
 import React, { useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { func, instanceOf } from 'prop-types';
+import { ButtonGroup, Button } from '@material-ui/core';
 
 import {
   ThumbStyled, ThumbInner, ImageStyled, ThumbRootStlyed,
 } from './ImageSelectorStyled';
-
-const thumbs = files => files.map(file => (
-  <ThumbStyled key={file.name}>
-    <ThumbInner><ImageStyled src={file.preview} /></ThumbInner>
-  </ThumbStyled>
-));
-
 
 const ImageSelector = ({ files, onChange }) => {
   const { getRootProps, getInputProps } = useDropzone({
@@ -25,6 +19,19 @@ const ImageSelector = ({ files, onChange }) => {
     },
   });
 
+  const swap = (index1, index2) => () => {
+    const tempFiles = files;
+    const temp = tempFiles[index1];
+    tempFiles[index1] = files[index2];
+    tempFiles[index2] = temp;
+    onChange([...tempFiles]);
+  };
+
+  const onDelete = index => () => {
+    files.splice(index, 1);
+    onChange([...files]);
+  };
+
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
     files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -36,7 +43,31 @@ const ImageSelector = ({ files, onChange }) => {
         <input {...getInputProps()} />
         <p>파일 선택</p>
       </div>
-      <ThumbRootStlyed>{thumbs(files)}</ThumbRootStlyed>
+      <ThumbRootStlyed>
+        {files.map((file, index) => (
+          <ThumbStyled key={file.name}>
+            <ThumbInner>
+              <div><ImageStyled src={file.preview} /></div>
+              <div>
+                <ButtonGroup orientation="vertical" color="default" variant="contained" fullWidth>
+                  <Button onClick={onDelete(index)}>삭제</Button>
+                  <Button onClick={swap(index, 0)} disabled={index === 0}>맨위</Button>
+                  <Button onClick={swap(index, index - 1)} disabled={index === 0}>위</Button>
+                  <Button onClick={swap(index, index + 1)} disabled={index === files.length - 1}>
+                    아래
+                  </Button>
+                  <Button
+                    onClick={swap(index, files.length - 1)}
+                    disabled={index === files.length - 1}
+                  >
+                    맨밑
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </ThumbInner>
+          </ThumbStyled>
+        ))}
+      </ThumbRootStlyed>
     </section>
   );
 };
