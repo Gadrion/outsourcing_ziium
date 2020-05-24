@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MapActions } from 'store/actionCreators';
+import { connect } from 'react-redux';
 
 class MarkerContainer extends Component {
 	state = {
@@ -15,16 +16,13 @@ class MarkerContainer extends Component {
 	onClick = type => event => {
 		switch(type) {
 			case 'marker': {
-				console.log('marker: ', event);
-				const { isOpen } = this.state;
-				this.setState({
-						isOpen: !isOpen,
-				});
+				const { placeId } = this.props;
+				MapActions.showMapData({ placeId });
 				break;
 			}
 			case 'info': {
 				const {
-					userId, position, address, label, placeId, memo,
+					userId, position, address, label, placeId, memo, history,
 				} = this.props;
 				MapActions.updateMapData({
 					userId,
@@ -33,11 +31,15 @@ class MarkerContainer extends Component {
 					label,
 					placeId,
 					memo,
+					history,
 				})
 				break;
 			}
-			case 'delete':
+			case 'delete': {
+				const { placeId } = this.props;
+				MapActions.deleteMapData({ placeId });
 				break;
+			}
 		}
 	}
 
@@ -67,4 +69,12 @@ MarkerContainer.propTypes = {
 	})
 };
 
-export default MarkerContainer;
+export default connect(
+  (state, props) => {
+		const showPlaceId = state.mapModule.get('showPlaceId');
+		const { placeId } = props;
+		return ({
+    	isOpen: showPlaceId === placeId,
+		});
+	},
+)(MarkerContainer);

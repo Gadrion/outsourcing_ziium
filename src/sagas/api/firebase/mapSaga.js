@@ -5,6 +5,7 @@ import {
 	GET_MAP_GEOCODE, getMapGeocodeSuccess,
 	GET_CURRENT_LOCATION, getCurrentLocationSuccess,
 	UPDATE_MAP_DATA, updateMapDataSuccess,
+	DELETE_MAP_DATA, deleteMapDataSuccess,
 } from 'store/modules/firebase/mapModule';
 import Geocode from 'react-geocode';
 import * as firebase from 'firebase';
@@ -49,6 +50,7 @@ function* asyncGetMapGeocodeSaga() {
 				label: '',
 				placeId: results[0].place_id,
 				memo: '상세정보를 입력하세요',
+				history: [],
 			}));
 		} catch (err) {
 			// yield put(preLoadActions.sessionKeyGetFailure(''));
@@ -57,14 +59,28 @@ function* asyncGetMapGeocodeSaga() {
 }
 
 const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
-	firebase.database().ref(`map/${mapData.placeId}`).update(mapData, error => {
+	// firebase.database.ServerValue.TIMESTAMP
+	console.log('mapData', mapData)
+	const mapRef = firebase.database().ref(`map/${mapData.placeId}`);
+	const currentUser = firebase.auth().currentUser;
+	console.log('user', currentUser);
+	const authInfo = {
+		email: currentUser.email,
+		updateData: firebase.database.ServerValue.TIMESTAMP,
+	}
+	console.log('authInfo', authInfo);
+	// history 관리
+	mapData.history.push(authInfo);
+	mapRef.update({
+		...mapData,
+	}, error => {
 		if (error) {
 			console.log('error???', error);
 			reject(error);
 		} else {
 			resolve('sucess');
 		}
-	})
+	});
 });
 
 function* asyncUpdateMapDataSaga() {
@@ -74,6 +90,35 @@ function* asyncUpdateMapDataSaga() {
 		try {
 			const result = yield firebaseDatabaseUpdate(payload);
 			console.log('result', result);
+			yield put(updateMapDataSuccess(payload));
+
+		} catch (err) {
+			console.log('err', err);
+			// yield put(preLoadActions.sessionKeyGetFailure(''));
+		}
+	}
+}
+
+const firebaseDatabaseDelete = mapData => new Promise((resolve, reject) => {
+	// console.log('mapData', mapData);
+	firebase.database().ref(`map/${mapData.placeId}`).remove(error => {
+		if (error) {
+			console.log('error???', error);
+			reject(error);
+		} else {
+			resolve('sucess');
+		}
+	})
+});
+
+function* asyncDeleteMapDataSaga() {
+	while (true) {
+		const { payload } = yield take(DELETE_MAP_DATA);
+
+		try {
+			const result = yield firebaseDatabaseDelete(payload);
+			console.log('result', result);
+			// yield put(updateMapDataSuccess(payload));
 
 		} catch (err) {
 			console.log('err', err);
@@ -87,6 +132,7 @@ export default function* rootMapSaga() {
 		asyncGetPositionSaga(),
 		asyncGetMapGeocodeSaga(),
 		asyncUpdateMapDataSaga(),
+		asyncDeleteMapDataSaga(),
 	]);
 }
   

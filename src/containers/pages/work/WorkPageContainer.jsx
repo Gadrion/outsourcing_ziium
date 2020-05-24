@@ -38,6 +38,7 @@ class WorkPageContainer extends React.Component {
       case 'itemSearch':
         break;
       case 'map': {
+        MapActions.showMapData({ placeId: '' });
         const { addItemFocus } = this.state;
         if (addItemFocus) {
           const lat = event.latLng.lat();
