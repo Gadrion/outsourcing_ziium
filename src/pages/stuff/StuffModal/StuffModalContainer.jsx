@@ -6,6 +6,7 @@ import { StuffActions } from 'store/actionCreators';
 
 class SutffModalContainer extends React.Component {
   state = {
+    isOpen: true,
   };
 
   setRootElem = elem => {
@@ -13,7 +14,9 @@ class SutffModalContainer extends React.Component {
   }
 
   _onClick = eventName => () => {
-    const { id, history } = this.props;
+    const { id } = this.props;
+    const { isOpen } = this.state;
+
     switch (eventName) {
       case 'save': {
         // add redux action code
@@ -25,7 +28,7 @@ class SutffModalContainer extends React.Component {
         break;
       }
       case 'close': {
-        history.push('/work');
+        this.setState({ isOpen: !isOpen });
         break;
       }
       case 'gotoTop': {
@@ -92,7 +95,6 @@ SutffModalContainer.defaultProps = {
 SutffModalContainer.propTypes = {
   render: func.isRequired,
   id: number,
-  history: instanceOf(Object).isRequired,
   files: instanceOf(Object).isRequired,
 };
 

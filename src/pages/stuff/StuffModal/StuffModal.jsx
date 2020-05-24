@@ -7,17 +7,16 @@ import { withContainer } from 'wisenet-ui/util/hoc';
 import SutffModalContainer from './StuffModalContainer';
 import SutffForm from '../StuffForm/StuffForm';
 import Edge from '../Edge/Edge';
-import { StuffModalStyled, StuffStyled } from './StuffModalStyled';
+import { ModalStyled, StuffStyled, PaperStyled } from './StuffModalStyled';
 
 export const SutffModal = ({
   isOpen, _onClick, _onChange, setRootElem,
 }) => (
-  <StuffModalStyled
-    isOpen={isOpen}
-    shouldCloseOnOverlayClick
-  >
-    <StuffStyled ref={setRootElem}>
-      <SutffForm />
+  <ModalStyled open={isOpen}>
+    <PaperStyled>
+      <StuffStyled ref={setRootElem}>
+        <SutffForm />
+      </StuffStyled>
       <Edge left bottom>
         <ButtonGroup orientation="vertical" color="default" variant="contained">
           {/* <Button onClick={_onClick('save')}>저장</Button> */}
@@ -37,8 +36,8 @@ export const SutffModal = ({
           {/* <Button onClick={_onClick('copy')}>구옥 복사</Button> */}
         </ButtonGroup>
       </Edge>
-    </StuffStyled>
-  </StuffModalStyled>
+    </PaperStyled>
+  </ModalStyled>
 );
 
 SutffModal.propTypes = {
