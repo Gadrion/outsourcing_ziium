@@ -59,6 +59,14 @@ class SutffPageContainer extends React.Component {
             preview: URL.createObjectURL(file),
           }));
         }
+
+        const limit = 10;
+        if (files.length > limit) {
+          // eslint-disable-next-line no-alert
+          alert(`최대 ${limit}개만 추가 할 수 있습니다.`);
+          return;
+        }
+
         StuffActions.setForm({ files: [...files] });
         break;
       }
