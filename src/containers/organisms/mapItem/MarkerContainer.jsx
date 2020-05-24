@@ -93,7 +93,7 @@ MarkerContainer.propTypes = {
   placeId: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   memo: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(Array).isRequired,
+  history: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default connect(
