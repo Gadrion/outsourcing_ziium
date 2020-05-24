@@ -4,77 +4,104 @@ import { MapActions } from 'store/actionCreators';
 import { connect } from 'react-redux';
 
 class MarkerContainer extends Component {
-	state = {
-		isOpen: false,
-	};
+  state = {
+    isOpen: false,
+    imageFiles: [],
+  };
 
-	onLoad = marker => {
-		this.marker = marker;
-		console.log('marker: ', marker);
-	}
+  onLoad = marker => {
+    this.marker = marker;
+    console.log('marker: ', marker);
+  }
 
-	onClick = type => event => {
-		switch(type) {
-			case 'marker': {
-				const { placeId } = this.props;
-				MapActions.showMapData({ placeId });
-				break;
-			}
-			case 'info': {
-				const {
-					userId, position, address, label, placeId, memo, history,
-				} = this.props;
-				MapActions.updateMapData({
-					userId,
-					position,
-					address,
-					label,
-					placeId,
-					memo,
-					history,
-				})
-				break;
-			}
-			case 'delete': {
-				const { placeId } = this.props;
-				MapActions.deleteMapData({ placeId });
-				break;
-			}
-		}
-	}
+  onClick = type => () => {
+    switch (type) {
+      case 'marker': {
+        const { placeId } = this.props;
+        MapActions.showMapData({ placeId });
+        break;
+      }
+      case 'info': {
+        const {
+          userId, position, address, label, placeId, memo, history,
+        } = this.props;
+        const { imageFiles } = this.state;
+        MapActions.updateMapData({
+          userId,
+          position,
+          address,
+          label,
+          placeId,
+          memo,
+          history,
+          imageFiles
+        });
+        break;
+      }
+      case 'delete': {
+        const { placeId } = this.props;
+        MapActions.deleteMapData({ placeId });
+        break;
+      }
+      case 'close': {
+        MapActions.showMapData({ placeId: '' });
+        break;
+      }
+      default:
+        break;
+    }
+  }
 
-	render() {
-		const { render } = this.props;
-		return render({
-			...this,
-			...this.state,
-			...this.props,
-		});
-	}
+  onChange = type => event => {
+    switch (type) {
+      case 'file': {
+        console.log('event', event.target.files);
+        this.setState({
+          imageFiles: event.target.files,
+        })
+        break;
+      }
+    }
+  }
+
+  render() {
+    const { render } = this.props;
+    return render({
+      ...this,
+      ...this.state,
+      ...this.props,
+    });
+  }
 }
 
 MarkerContainer.defaultProps = {
-	label: 'qwe',
-	position: {
+  label: 'qwe',
+  position: {
     lat: 37.772,
-    lng: -122.214
-  }
+    lng: -122.214,
+  },
 };
 
 MarkerContainer.propTypes = {
-	label: PropTypes.string,
-	position: PropTypes.shape({
-		lat: PropTypes.number,
-		lag: PropTypes.number,
-	})
+  render: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  position: PropTypes.shape({
+    lat: PropTypes.number,
+    lag: PropTypes.number,
+  }),
+  userId: PropTypes.string.isRequired,
+  placeId: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  memo: PropTypes.string.isRequired,
+  history: PropTypes.objectOf(Array).isRequired,
 };
 
 export default connect(
   (state, props) => {
-		const showPlaceId = state.mapModule.get('showPlaceId');
-		const { placeId } = props;
-		return ({
-    	isOpen: showPlaceId === placeId,
-		});
-	},
+    const showPlaceId = state.mapModule.get('showPlaceId');
+    const { placeId } = props;
+    return ({
+      isOpen: showPlaceId === placeId,
+    });
+  },
 )(MarkerContainer);

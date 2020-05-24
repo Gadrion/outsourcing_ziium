@@ -59,16 +59,15 @@ function* asyncGetMapGeocodeSaga() {
 }
 
 const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
-	// firebase.database.ServerValue.TIMESTAMP
-	console.log('mapData', mapData)
+	console.log('mapData', mapData);
 	const mapRef = firebase.database().ref(`map/${mapData.placeId}`);
 	const currentUser = firebase.auth().currentUser;
-	console.log('user', currentUser);
+	// console.log('user', currentUser);
 	const authInfo = {
 		email: currentUser.email,
 		updateData: firebase.database.ServerValue.TIMESTAMP,
 	}
-	console.log('authInfo', authInfo);
+	// console.log('authInfo', authInfo);
 	// history 관리
 	mapData.history.push(authInfo);
 	mapRef.update({
@@ -83,12 +82,38 @@ const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
 	});
 });
 
+const firebaseStorageUpdate = (placeId, imageData) => new Promise((resolve, reject) => {
+	const mapRef = firebase.storage().ref().child(`map/${placeId}/${imageData.name}`);
+	mapRef.put(imageData).then(snapshot => {
+		console.log('snapshot', snapshot);
+		resolve('sucess');
+	}).catch(error => {
+		console.log('error???', error);
+			reject(error);
+	});
+});
+
+const mapdataImageUpdate = async mapData => {
+	let updateResult = 'sucess';
+	for(let i = mapData.imageFiles.length - 1; i >= 0; i--) {
+		const imageData = mapData.imageFiles[i];
+		console.log('imageData', imageData);
+		const result = await firebaseStorageUpdate(mapData.placeId, imageData);
+		console.log('result', result);
+	}
+	return updateResult;
+}
+
 function* asyncUpdateMapDataSaga() {
 	while (true) {
 		const { payload } = yield take(UPDATE_MAP_DATA);
 
 		try {
 			const result = yield firebaseDatabaseUpdate(payload);
+			if (payload.imageFiles.length !== 0) {
+				const result2 = yield mapdataImageUpdate(payload);
+				console.log('result2', result2);
+			}
 			console.log('result', result);
 			yield put(updateMapDataSuccess(payload));
 
