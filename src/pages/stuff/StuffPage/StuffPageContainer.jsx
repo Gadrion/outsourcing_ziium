@@ -1,6 +1,8 @@
 import React from 'react';
 import { func } from 'prop-types';
 
+import { StuffActions } from 'store/actionCreators';
+
 class SutffPageContainer extends React.Component {
   state = {
   };
@@ -12,8 +14,8 @@ class SutffPageContainer extends React.Component {
   _onClick = eventName => () => {
     switch (eventName) {
       case 'save': {
-        // get data
         // add redux action code
+        StuffActions.updateForm();
         break;
       }
       case 'gotoTop': {

@@ -3,7 +3,6 @@ import { func, instanceOf } from 'prop-types';
 import { connect } from 'react-redux';
 import { StuffActions } from 'store/actionCreators';
 
-
 class SutffFormContainer extends React.Component {
   state = {};
 
@@ -16,7 +15,7 @@ class SutffFormContainer extends React.Component {
       case 'name':
       case 'memo': {
         const [{ target: { value } }] = params;
-        StuffActions.setCurrentForm({ [eventName]: value });
+        StuffActions.setForm({ [eventName]: value });
         break;
       }
       case 'option': {
@@ -27,12 +26,12 @@ class SutffFormContainer extends React.Component {
         } else {
           delete option[name];
         }
-        StuffActions.setCurrentForm({ option: { ...option } });
+        StuffActions.setForm({ option: { ...option } });
         break;
       }
       case 'images': {
         const [files] = params;
-        StuffActions.setCurrentForm({ files });
+        StuffActions.setForm({ files });
         break;
       }
       default:
