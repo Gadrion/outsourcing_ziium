@@ -24,6 +24,7 @@ import * as layoutActions from './modules/page/layoutModule';
 import * as liveRecordStatusActions from './modules/liveRecordStatus/liveRecordStatusModule';
 
 import * as mapActions from './modules/firebase/mapModule';
+import * as stuffActions from './modules/stuff/stuffModule';
 
 const { dispatch } = store;
 
@@ -51,3 +52,4 @@ export const LayoutActions = bindActionCreators(layoutActions, dispatch);
 export const LiveRecordStatusActions = bindActionCreators(liveRecordStatusActions, dispatch);
 
 export const MapActions = bindActionCreators(mapActions, dispatch);
+export const StuffActions = bindActionCreators(stuffActions, dispatch);

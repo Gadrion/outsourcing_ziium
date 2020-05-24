@@ -1,13 +1,11 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, instanceOf } from 'prop-types';
+import { connect } from 'react-redux';
+import { StuffActions } from 'store/actionCreators';
+
 
 class SutffFormContainer extends React.Component {
-  state = {
-    files: [],
-    name: '',
-    memo: '',
-    option: {},
-  };
+  state = {};
 
   setRootElem = elem => {
     this.ref = elem;
@@ -18,23 +16,23 @@ class SutffFormContainer extends React.Component {
       case 'name':
       case 'memo': {
         const [{ target: { value } }] = params;
-        this.setState({ [eventName]: value });
+        StuffActions.setCurrentForm({ [eventName]: value });
         break;
       }
       case 'option': {
         const [{ target: { name, checked } }] = params;
-        const { option } = this.state;
+        const { option } = this.props;
         if (checked) {
           option[name] = true;
         } else {
           delete option[name];
         }
-        this.setState({ option: { ...option } });
+        StuffActions.setCurrentForm({ option: { ...option } });
         break;
       }
       case 'images': {
         const [files] = params;
-        this.setState({ files });
+        StuffActions.setCurrentForm({ files });
         break;
       }
       default:
@@ -53,6 +51,13 @@ class SutffFormContainer extends React.Component {
 
 SutffFormContainer.propTypes = {
   render: func.isRequired,
+  option: instanceOf(Object).isRequired,
 };
 
-export default SutffFormContainer;
+export default connect(({ stuffModule }) => ({
+  name: stuffModule.get('name'),
+  memo: stuffModule.get('memo'),
+  option: stuffModule.get('option'),
+  files: stuffModule.get('files'),
+}),
+() => ({}))(SutffFormContainer);

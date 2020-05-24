@@ -9,9 +9,7 @@ import {
 
 const thumbs = files => files.map(file => (
   <ThumbStyled key={file.name}>
-    <ThumbInner>
-      <ImageStyled src={file.preview} />
-    </ThumbInner>
+    <ThumbInner><ImageStyled src={file.preview} /></ThumbInner>
   </ThumbStyled>
 ));
 
