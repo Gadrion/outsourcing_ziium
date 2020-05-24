@@ -9,13 +9,18 @@ import SutffForm from '../StuffForm/StuffForm';
 import Edge from '../Edge/Edge';
 import { StuffPageStyled } from './StuffPageStyled';
 
-export const SutffFormPage = ({ id, _onClick, setRootElem }) => (
+export const SutffFormPage = ({
+  id, _onClick, _onChange, setRootElem,
+}) => (
   <StuffPageStyled ref={setRootElem}>
     <SutffForm />
     <Edge left bottom>
       <ButtonGroup orientation="vertical" color="default" variant="contained">
         <Button onClick={_onClick('save')}>저장</Button>
-        <Button onClick={_onClick('addFile')}>파일 추가</Button>
+        <Button component="label">
+          파일 추가
+          <input type="file" style={{ display: 'none' }} onChange={_onChange('file')} multiple />
+        </Button>
         <Button onClick={_onClick('gotoTop')}>위로</Button>
         <Button onClick={_onClick('gotoEnd')}>아래로</Button>
       </ButtonGroup>
@@ -38,6 +43,7 @@ SutffFormPage.defaultProps = {
 SutffFormPage.propTypes = {
   id: number,
   _onClick: func.isRequired,
+  _onChange: func.isRequired,
   setRootElem: func.isRequired,
 };
 

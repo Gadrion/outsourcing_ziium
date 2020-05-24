@@ -42,7 +42,7 @@ const StuffForm = ({
   const optionKeys = Object.keys(option);
 
   const controls = [
-    { label: '물건명', control: (<TextField defaultValue={name} variant="filled" fullWidth onChange={_onChange('name')} />) },
+    { label: '물건명', control: (<TextField value={name} variant="filled" fullWidth onChange={_onChange('name')} />) },
     { label: '상태', control: (<StatusSelect onClick={_onClick('location')} />) },
     {
       label: '메모',
@@ -50,7 +50,7 @@ const StuffForm = ({
         id="filled-multiline-static"
         multiline
         rows={6}
-        defaultValue={memo}
+        value={memo}
         variant="filled"
         fullWidth
         onChange={_onChange('memo')}
