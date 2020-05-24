@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withContainer } from 'wisenet-ui/util/hoc';
 import { WorkPageContainer } from 'containers/pages';
-import { GoogleMap, LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
-import { Marker } from 'components/organisms';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { Marker, SeachBox } from 'components/organisms';
 import { FirebaseDatabaseNode } from "@react-firebase/database";
 import {
   ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled,
@@ -12,13 +12,10 @@ import {
 import { googleMapsApiKey } from '../../../firebase/config';
 
 class WorkPage extends React.Component {
-  onLoad = ref => this.searchBox = ref;
-
-  onPlacesChanged = () => console.log(this.searchBox.getPlaces());
-
   render() {
     const {
       onClick, viewType, addItemFocus, currentPosion, modifyMapList, load,
+      positionSearchOpen, setSearchPositionOpen,
     } = this.props;
     return (
       <>
@@ -51,32 +48,7 @@ class WorkPage extends React.Component {
             {modifyMapList.map((mapData) => (
               <Marker key={mapData.placeId} {...mapData} />
             ))}
-            <StandaloneSearchBox
-              onLoad={this.onLoad}
-              onPlacesChanged={
-                this.onPlacesChanged
-              }
-            >
-              <input
-                type="text"
-                placeholder="Customized your placeholder"
-                style={{
-                  boxSizing: `border-box`,
-                  border: `1px solid transparent`,
-                  width: `240px`,
-                  height: `32px`,
-                  padding: `0 12px`,
-                  borderRadius: `3px`,
-                  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                  fontSize: `14px`,
-                  outline: `none`,
-                  textOverflow: `ellipses`,
-                  position: "absolute",
-                  left: "50%",
-                  marginLeft: "-120px"
-                }}
-              />
-            </StandaloneSearchBox>
+            <SeachBox isOpen={positionSearchOpen} setSearchPositionOpen={setSearchPositionOpen} />
           </GoogleMap>
         </LoadScript>
         {/* map위에 올라오는 버튼들 */}

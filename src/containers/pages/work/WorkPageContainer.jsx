@@ -7,6 +7,7 @@ class WorkPageContainer extends React.Component {
   state = {
     addItemFocus: false,
     viewType: 'all',
+    positionSearchOpen: false,
   }
 
   componentDidMount() {
@@ -22,8 +23,10 @@ class WorkPageContainer extends React.Component {
         this.setState({ addItemFocus: !addItemFocus });
         break;
       }
-      case 'positionSearch':
+      case 'positionSearch': {
+        this.setSearchPositionOpen(true);
         break;
+      }
       case 'all':
       case 'newItem':
       case 'oldItem': {
@@ -48,6 +51,12 @@ class WorkPageContainer extends React.Component {
         break;
       }
     }
+  }
+
+  setSearchPositionOpen = isOpen => {
+    this.setState({
+      positionSearchOpen: isOpen,
+    });
   }
 
   render() {
