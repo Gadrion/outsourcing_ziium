@@ -19,7 +19,7 @@ const PositionSearchListPopover = ({
         variant="outlined"
         onClick={onClick('positionSearchToggle')}
       >
-        <MapIcon color='' />
+        <MapIcon color={isOpen ? 'action' : 'inherit'} />
       </ButtonStyled>
       <Popper
         open={isOpen}
@@ -34,8 +34,9 @@ const PositionSearchListPopover = ({
                 button
                 selected={selectedIndex === index}
                 onClick={() => onClick('selectedIndex')(index)}
+                key={positionSearch.placeId}
               >
-                <ListItemText primary={positionSearch.formatted_address}></ListItemText>
+                <ListItemText primary={positionSearch.address}></ListItemText>
               </ListItem>
             ))}
           </List>

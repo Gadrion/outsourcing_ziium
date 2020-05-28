@@ -48,7 +48,7 @@ class WorkPage extends React.Component {
             {modifyMapList.map((mapData) => (
               <Marker key={mapData.placeId} {...mapData} />
             ))}
-            <SeachBox isOpen={positionSearchOpen} setSearchPositionOpen={setSearchPositionOpen} />
+            {positionSearchOpen && <SeachBox isOpen={positionSearchOpen} setSearchPositionOpen={setSearchPositionOpen} />}
           </GoogleMap>
         </LoadScript>
         {/* map위에 올라오는 버튼들 */}
