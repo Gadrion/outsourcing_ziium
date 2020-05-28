@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { withContainer } from 'wisenet-ui/util/hoc';
 import { WorkPageContainer } from 'containers/pages';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
-import { Marker, SeachBox } from 'components/organisms';
+import { Marker, SeachBox, PositionSearchListPopover } from 'components/organisms';
 import { FirebaseDatabaseNode } from "@react-firebase/database";
 import {
   ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled,
-  PendingDiv,
+  PendingDiv, SearchResultButtonStyled,
 } from './WorkPageStyled';
 import { googleMapsApiKey } from '../../../firebase/config';
 
@@ -52,6 +52,9 @@ class WorkPage extends React.Component {
           </GoogleMap>
         </LoadScript>
         {/* map위에 올라오는 버튼들 */}
+        <SearchResultButtonStyled>
+          <PositionSearchListPopover />
+        </SearchResultButtonStyled>
         <LogoutAreaStyled>
           <ButtonStyled variant="outlined" onClick={onClick('logout')}>로그아웃</ButtonStyled>
         </LogoutAreaStyled>

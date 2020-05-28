@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
 export const ButtonStyled = styled(Button)`
@@ -13,8 +13,15 @@ export const ButtonStyled = styled(Button)`
 
 export const LogoutAreaStyled = styled.div`
 	position: absolute;
+	top: 42px;
+	margin: 10px;
+`;
+
+export const SearchResultButtonStyled = styled.div`
+	position: absolute;
 	left: 150px;
 	margin: 10px;
+	margin-left: 1px;
 `;
 
 export const TopCenterAreaStyled = styled.div`

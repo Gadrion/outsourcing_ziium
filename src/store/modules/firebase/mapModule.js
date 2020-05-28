@@ -12,6 +12,8 @@ export const SHOW_MAP_DATA = 'map/SHOW_MAP_DATA';
 export const DELETE_MAP_DATA = 'map/DELETE_MAP_DATA';
 export const DELETE_MAP_DATA_SUCCESS = 'map/DELETE_MAP_DATA_SUCCESS';
 
+export const SET_POSITION_SEARCH_OPEN = 'map/SET_POSITION_SEARCH_OPEN';
+
 export const getCurrentLocation = createAction(GET_CURRENT_LOCATION);
 export const getCurrentLocationSuccess = createAction(GET_CURRENT_LOCATION_SUCCESS);
 export const getCurrentLocationFailure = createAction(GET_CURRENT_LOCATION_FAILURE);
@@ -22,6 +24,8 @@ export const updateMapDataSuccess = createAction(UPDATE_MAP_DATA_SUCCESS);
 export const showMapData = createAction(SHOW_MAP_DATA);
 export const deleteMapData = createAction(DELETE_MAP_DATA);
 export const deleteMapDataSuccess = createAction(DELETE_MAP_DATA_SUCCESS);
+
+export const setPositionSearchOpen = createAction(SET_POSITION_SEARCH_OPEN);
   
 const initialState = Map({
   modifyMapList: [],
@@ -31,6 +35,9 @@ const initialState = Map({
   },
   load: false,
   showPlaceId: '',
+
+  positionSearchListOpen: false,
+  positionSearchList: [],
 });
 
 const mapListSplice = (mapList, placeId) => {
@@ -61,6 +68,11 @@ export default handleActions({
     return state.set('modifyMapList', mapListSplice(currentModifyMapList, placeId))
       .set('showPlaceId', '')
       .set('load', false);
+  },
+  [SET_POSITION_SEARCH_OPEN]: (state, { payload: { isOpen, positionSearchList }}) => {
+    return positionSearchList
+      ? state.set('positionSearchListOpen', isOpen).set('positionSearchList', positionSearchList)
+      : state.set('positionSearchListOpen', isOpen);
   },
 }, initialState);
   
