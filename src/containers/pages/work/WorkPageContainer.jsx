@@ -1,4 +1,3 @@
-/* eslint-disable default-case */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -58,6 +57,8 @@ class WorkPageContainer extends React.Component {
         }
         break;
       }
+      default:
+        break;
     }
   }
 

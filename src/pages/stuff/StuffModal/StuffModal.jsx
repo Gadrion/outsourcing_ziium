@@ -40,8 +40,12 @@ export const SutffModal = ({
   </ModalStyled>
 );
 
+SutffModal.defaultProps = {
+  isOpen: false,
+};
+
 SutffModal.propTypes = {
-  isOpen: bool.isRequired,
+  isOpen: bool,
   _onClick: func.isRequired,
   _onChange: func.isRequired,
   setRootElem: func.isRequired,

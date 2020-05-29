@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MapActions } from 'store/actionCreators';
+import { MapActions, StuffActions } from 'store/actionCreators';
 import { connect } from 'react-redux';
 
 class MarkerContainer extends Component {
@@ -26,6 +26,7 @@ class MarkerContainer extends Component {
           userId, position, address, label, placeId, memo, history,
         } = this.props;
         const { imageFiles } = this.state;
+        StuffActions.open(true);
         MapActions.updateMapData({
           userId,
           position,
@@ -34,7 +35,7 @@ class MarkerContainer extends Component {
           placeId,
           memo,
           history,
-          imageFiles
+          imageFiles,
         });
         break;
       }
@@ -58,9 +59,10 @@ class MarkerContainer extends Component {
         console.log('event', event.target.files);
         this.setState({
           imageFiles: event.target.files,
-        })
+        });
         break;
       }
+      default:
     }
   }
 

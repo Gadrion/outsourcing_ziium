@@ -20,8 +20,8 @@ const options = [
   { key: 'imprisonment', label: '구옥' },
 ];
 
-const ItemSearchForm = ({ isOpen, onClick }) => (
-  <PaperStyled variant="outlined" component="div" isOpen={isOpen}>
+const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
+  <PaperStyled variant="outlined" component="div" display={isOpen ? 'inline-block' : 'none'}>
     <Grid container direction="column">
       <LayerStyled width={1}>
         <FormGroup row>
@@ -43,8 +43,8 @@ const ItemSearchForm = ({ isOpen, onClick }) => (
             />
           </Grid>
           <Grid item xs={8}>
-            <TextField multiline rows={1} variant="filled" fullWidth size="small" />
-            <TextField multiline rows={1} variant="filled" fullWidth size="small" />
+            <TextField variant="filled" fullWidth size="small" onChange={onChange('text11')} />
+            <TextField variant="filled" fullWidth size="small" onChange={onChange('text12')} />
           </Grid>
         </Grid>
       </LayerStyled>
@@ -57,8 +57,8 @@ const ItemSearchForm = ({ isOpen, onClick }) => (
             />
           </Grid>
           <Grid item xs={8}>
-            <TextField multiline rows={1} variant="filled" fullWidth size="small" />
-            <TextField multiline rows={1} variant="filled" fullWidth size="small" />
+            <TextField variant="filled" fullWidth size="small" onChange={onChange('text21')} />
+            <TextField variant="filled" fullWidth size="small" onChange={onChange('text22')} />
           </Grid>
         </Grid>
       </LayerStyled>
@@ -72,11 +72,13 @@ const ItemSearchForm = ({ isOpen, onClick }) => (
 ItemSearchForm.defaultProps = {
   isOpen: false,
   onClick: () => () => { },
+  onChange: () => () => { },
 };
 
 ItemSearchForm.propTypes = {
   isOpen: bool,
   onClick: func,
+  onChange: func,
 };
 
 export default ItemSearchForm;

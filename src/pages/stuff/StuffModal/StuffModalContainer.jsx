@@ -5,9 +5,7 @@ import { func, number, instanceOf } from 'prop-types';
 import { StuffActions } from 'store/actionCreators';
 
 class SutffModalContainer extends React.Component {
-  state = {
-    isOpen: true,
-  };
+  state = { };
 
   setRootElem = elem => {
     this.ref = elem;
@@ -15,7 +13,6 @@ class SutffModalContainer extends React.Component {
 
   _onClick = eventName => () => {
     const { id } = this.props;
-    const { isOpen } = this.state;
 
     switch (eventName) {
       case 'save': {
@@ -28,7 +25,7 @@ class SutffModalContainer extends React.Component {
         break;
       }
       case 'close': {
-        this.setState({ isOpen: !isOpen });
+        StuffActions.open(false);
         break;
       }
       case 'gotoTop': {
@@ -101,5 +98,6 @@ SutffModalContainer.propTypes = {
 export default connect(({ stuffModule }) => ({
   id: stuffModule.get('id'),
   files: stuffModule.get('files'),
+  isOpen: stuffModule.get('isOpen'),
 }),
 () => ({}))(SutffModalContainer);
