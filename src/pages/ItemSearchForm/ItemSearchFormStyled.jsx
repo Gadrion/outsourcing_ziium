@@ -5,7 +5,7 @@ export const PaperStyled = styled(Paper)`
   width: 450px;
   box-sizing: content-box;
   padding: 5px 10px;
-  display: ${({ isOpen }) => (isOpen ? 'inline-block' : 'inline-block')}
+  display: ${({ isOpen }) => (isOpen ? 'inline-block' : 'none')}
 `;
 
 export const LayerStyled = styled(Box)`
