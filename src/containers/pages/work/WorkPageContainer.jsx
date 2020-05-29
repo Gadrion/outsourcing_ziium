@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,6 +9,7 @@ class WorkPageContainer extends React.Component {
     addItemFocus: false,
     viewType: 'all',
     positionSearchOpen: false,
+    itemSearchOpen: false,
   }
 
   componentDidMount() {
@@ -34,12 +36,18 @@ class WorkPageContainer extends React.Component {
         if (viewType !== type) {
           this.setState({
             viewType: type,
-          })
+          });
         }
         break;
       }
-      case 'itemSearch':
+      case 'itemSearchClose':
+        this.setState({ itemSearchOpen: false });
         break;
+      case 'itemSearch': {
+        const { itemSearchOpen } = this.state;
+        this.setState({ itemSearchOpen: !itemSearchOpen });
+        break;
+      }
       case 'map': {
         MapActions.showMapData({ placeId: '' });
         const { addItemFocus } = this.state;

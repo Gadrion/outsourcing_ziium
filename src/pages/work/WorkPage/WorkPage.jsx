@@ -1,22 +1,25 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withContainer } from 'wisenet-ui/util/hoc';
 import { WorkPageContainer } from 'containers/pages';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { Marker, SeachBox, PositionSearchListPopover } from 'components/organisms';
-import { FirebaseDatabaseNode } from "@react-firebase/database";
+import { FirebaseDatabaseNode } from '@react-firebase/database';
+import { Box } from '@material-ui/core';
 import {
   ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled,
   PendingDiv, SearchResultButtonStyled,
 } from './WorkPageStyled';
 import { googleMapsApiKey } from '../../../firebase/config';
 
-class WorkPage extends React.Component {
+class WorkPage extends React.PureComponent {
   render() {
     const {
       onClick, viewType, addItemFocus, currentPosion, modifyMapList, load,
       positionSearchOpen, setSearchPositionOpen,
+      itemSearchOpen,
     } = this.props;
+
     return (
       <>
         <LoadScript
@@ -38,17 +41,20 @@ class WorkPage extends React.Component {
                 const mapDataList = event.value;
                 return (
                   mapDataList ? (
-                    Object.keys(mapDataList).map(
-                      mapDataKey => <Marker key={mapDataList[mapDataKey].placeId} {...mapDataList[mapDataKey]} />)
+                    Object.keys(mapDataList).map(mapDataKey => (
+                      <Marker key={mapDataList[mapDataKey].placeId} {...mapDataList[mapDataKey]} />
+                    ))
                   ) : <></>
                 );
               }}
             </FirebaseDatabaseNode>
             {/* 수정중인 맵 리스트 */}
-            {modifyMapList.map((mapData) => (
+            {modifyMapList.map(mapData => (
               <Marker key={mapData.placeId} {...mapData} />
             ))}
-            {positionSearchOpen && <SeachBox isOpen={positionSearchOpen} setSearchPositionOpen={setSearchPositionOpen} />}
+            {positionSearchOpen && (
+              <SeachBox isOpen={positionSearchOpen} setSearchPositionOpen={setSearchPositionOpen} />
+            )}
           </GoogleMap>
         </LoadScript>
         {/* map위에 올라오는 버튼들 */}
@@ -67,10 +73,16 @@ class WorkPage extends React.Component {
           <ButtonStyled variant="outlined" onClick={onClick('newItem')} checkViewType={viewType === 'newItem'}>신축</ButtonStyled>
           <ButtonStyled variant="outlined" onClick={onClick('oldItem')} checkViewType={viewType === 'oldItem'}>구옥</ButtonStyled>
         </TopRightAreaStyled>
-        <LeftBottomAreaStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
+        <LeftBottomAreaStyled onMouseLeave={onClick('itemSearchClose')}>
+          <ButtonStyled aria-describedby="item-search" variant="contained" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
+          <Box
+            component="span"
+            // display={itemSearchOpen ? 'inline' : 'none'}
+          >
+            hello world
+          </Box>
         </LeftBottomAreaStyled>
-        {load && <PendingDiv></PendingDiv>}
+        {load && <PendingDiv />}
       </>
     );
   }

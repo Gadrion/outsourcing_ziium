@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
@@ -5,10 +6,10 @@ export const ButtonStyled = styled(Button)`
 	height: 40px;
 	font-size: 17px;
 	&:hover {
-    background-color: ${props => props.checkViewType ? '#b8e0ec' : '#efecec'};
+    background-color: ${props => (props.checkViewType ? '#b8e0ec' : '#efecec')};
     border: 1px solid #efecec;
 	}
-	background-color: ${props => props.checkViewType ? '#b8e0ec' : 'white'}
+	background-color: ${props => (props.checkViewType ? '#b8e0ec' : 'white')}
 `;
 
 export const LogoutAreaStyled = styled.div`

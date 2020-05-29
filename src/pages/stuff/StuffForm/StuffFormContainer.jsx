@@ -31,7 +31,6 @@ class SutffFormContainer extends React.Component {
       return acc;
     }, { ...option });
     StuffActions.setForm({ option: newOption });
-
   }
 
   setRootElem = elem => {
