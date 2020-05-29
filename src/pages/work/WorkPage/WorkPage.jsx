@@ -5,12 +5,13 @@ import { WorkPageContainer } from 'containers/pages';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { Marker, SeachBox, PositionSearchListPopover } from 'components/organisms';
 import { FirebaseDatabaseNode } from '@react-firebase/database';
-import { Box } from '@material-ui/core';
+
 import {
   ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled,
   PendingDiv, SearchResultButtonStyled,
 } from './WorkPageStyled';
 import { googleMapsApiKey } from '../../../firebase/config';
+import ItemSearchForm from '../../ItemSearchForm/ItemSearchForm';
 
 class WorkPage extends React.PureComponent {
   render() {
@@ -74,13 +75,8 @@ class WorkPage extends React.PureComponent {
           <ButtonStyled variant="outlined" onClick={onClick('oldItem')} checkViewType={viewType === 'oldItem'}>구옥</ButtonStyled>
         </TopRightAreaStyled>
         <LeftBottomAreaStyled onMouseLeave={onClick('itemSearchClose')}>
-          <ButtonStyled aria-describedby="item-search" variant="contained" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
-          <Box
-            component="span"
-            // display={itemSearchOpen ? 'inline' : 'none'}
-          >
-            hello world
-          </Box>
+          <ButtonStyled variant="contained" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
+          <ItemSearchForm isOpen={itemSearchOpen} />
         </LeftBottomAreaStyled>
         {load && <PendingDiv />}
       </>

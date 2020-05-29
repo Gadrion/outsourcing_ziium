@@ -41,6 +41,9 @@ export const TopRightAreaStyled = styled.div`
 export const LeftBottomAreaStyled = styled.div`
 	position: absolute;
 	bottom: 0;
+
+	display: inline-flex;
+	align-items: flex-end;
 `;
 
 export const PendingDiv = styled.div`
