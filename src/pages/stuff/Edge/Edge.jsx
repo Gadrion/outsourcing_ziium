@@ -4,9 +4,9 @@ import { EdgeStyled } from './EdgeStyled';
 
 const Edge = ({
   children,
-  top, left, bottom, right,
+  top, left, bottom, right, ...rest
 }) => (
-  <EdgeStyled top={top} left={left} bottom={bottom} right={right}>
+  <EdgeStyled top={top} left={left} bottom={bottom} right={right} {...rest}>
     {children}
   </EdgeStyled>
 );

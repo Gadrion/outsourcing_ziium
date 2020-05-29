@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import Edge from '../../stuff/Edge/Edge';
 
 export const ButtonStyled = styled(Button)`
 	height: 40px;
@@ -52,4 +53,8 @@ export const PendingDiv = styled.div`
 	height: 100vh;
 	background: lightgray;
 	opacity: 0.6;
+`;
+
+export const RightBottomEdgeStyled = styled(Edge)`
+	margin: 0 60px;
 `;

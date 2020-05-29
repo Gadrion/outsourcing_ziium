@@ -8,7 +8,7 @@ import { FirebaseDatabaseNode } from '@react-firebase/database';
 
 import {
   ButtonStyled, LogoutAreaStyled, TopCenterAreaStyled, TopRightAreaStyled, LeftBottomAreaStyled,
-  PendingDiv, SearchResultButtonStyled,
+  PendingDiv, SearchResultButtonStyled, RightBottomEdgeStyled,
 } from './WorkPageStyled';
 import { googleMapsApiKey } from '../../../firebase/config';
 import ItemSearchForm from '../../ItemSearchForm/ItemSearchForm';
@@ -78,6 +78,10 @@ class WorkPage extends React.PureComponent {
           <ButtonStyled variant="contained" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
           <ItemSearchForm isOpen={itemSearchOpen} />
         </LeftBottomAreaStyled>
+        <RightBottomEdgeStyled right bottom>
+          <ButtonStyled variant="contained" onClick={onClick('showIncomplete')}>완료물건안보기</ButtonStyled>
+          <ButtonStyled variant="contained" onClick={onClick('refresh')}>새로고침</ButtonStyled>
+        </RightBottomEdgeStyled>
         {load && <PendingDiv />}
       </>
     );
