@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import { func, instanceOf, string } from 'prop-types';
 import {
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const StuffForm = ({
-  name, memo, option, options, files, _onChange, _onClick,
+  name, memo, option, options, imageFiles, _onChange, _onClick,
 }) => {
   const classes = useStyles();
 
@@ -72,7 +73,7 @@ const StuffForm = ({
     },
     {
       label: '사진',
-      control: (<ImageSelector files={files} onChange={_onChange('images')} />),
+      control: (<ImageSelector files={imageFiles} onChange={_onChange('images')} />),
     },
   ];
 
@@ -102,12 +103,20 @@ const StuffForm = ({
   );
 };
 
+StuffForm.defaultProps = {
+  name: '',
+  memo: '',
+  imageFiles: [],
+  option: {},
+  options: [],
+};
+
 StuffForm.propTypes = {
-  name: string.isRequired,
-  memo: string.isRequired,
-  option: instanceOf(Object).isRequired,
-  options: instanceOf(Object).isRequired,
-  files: instanceOf(Object).isRequired,
+  name: string,
+  memo: string,
+  option: instanceOf(Object),
+  options: instanceOf(Object),
+  imageFiles: instanceOf(Object),
   _onChange: func.isRequired,
   _onClick: func.isRequired,
 };

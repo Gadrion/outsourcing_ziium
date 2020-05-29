@@ -84,6 +84,7 @@ class SutffFormContainer extends React.Component {
         StuffActions.setForm({ files });
         break;
       }
+
       default:
         console.warn(eventName, 'is undefined onChange Event');
         // eslint-disable-next-line no-alert
@@ -108,5 +109,5 @@ export default connect(({ stuffModule }) => ({
   name: stuffModule.get('name'),
   memo: stuffModule.get('memo'),
   option: stuffModule.get('option'),
-  files: stuffModule.get('files'),
+  imageFiles: stuffModule.get('imageFiles'),
 }), () => ({}))(withRouter(SutffFormContainer));
