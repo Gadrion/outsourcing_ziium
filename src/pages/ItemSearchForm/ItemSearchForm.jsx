@@ -1,26 +1,22 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import {
+  bool, func, instanceOf, string,
+} from 'prop-types';
 import {
   Grid, FormGroup, FormControlLabel, Checkbox, Button, TextField,
 } from '@material-ui/core';
 
+import { withContainer } from 'wisenet-ui/util/hoc';
+
+import ItemSearchFormContainer from './ItemSearchFormContainer';
+
 import { PaperStyled, LayerStyled } from './ItemSearchFormStyled';
 
-const options = [
-  { key: 'room1', label: '1룸' },
-  { key: 'room15', label: '1.5룸' },
-  { key: 'room2', label: '2룸' },
-  { key: 'room3', label: '3룸' },
-  { key: 'room4', label: '4룸' },
-  { key: 'all', label: '?' },
-  { key: 'duplex', label: '복층' },
-  { key: 'terrace', label: '테라스' },
-  { key: 'monthly', label: '월세' },
-  { key: 'charter', label: '전세' },
-  { key: 'imprisonment', label: '구옥' },
-];
-
-const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
+const ItemSearchForm = ({
+  isOpen, options, _onClick, _onChange, option,
+  resultOnly, otherwise,
+  resultOnly1, resultOnly2, otherwise1, otherwise2,
+}) => (
   <PaperStyled variant="outlined" component="div" display={isOpen ? 'inline-block' : 'none'}>
     <Grid container direction="column">
       <LayerStyled width={1}>
@@ -29,7 +25,7 @@ const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
             <FormControlLabel
               key={key}
               label={label}
-              control={(<Checkbox name={key} color="primary" onClick={onClick('check', key)} />)}
+              control={(<Checkbox name={key} color="primary" onClick={_onClick('check', key)} checked={option[key]} />)}
             />
           ))}
         </FormGroup>
@@ -39,12 +35,12 @@ const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
           <Grid item xs={4}>
             <FormControlLabel
               label="결과만"
-              control={(<Checkbox name="resultOnly1" color="primary" onClick={onClick('check')} />)}
+              control={(<Checkbox name="resultOnly" color="primary" onClick={_onClick('resultOnly')} checked={resultOnly} />)}
             />
           </Grid>
           <Grid item xs={8}>
-            <TextField variant="filled" fullWidth size="small" onChange={onChange('text11')} />
-            <TextField variant="filled" fullWidth size="small" onChange={onChange('text12')} />
+            <TextField variant="filled" fullWidth size="small" onChange={_onChange('resultOnly1')} value={resultOnly1} />
+            <TextField variant="filled" fullWidth size="small" onChange={_onChange('resultOnly2')} value={resultOnly2} />
           </Grid>
         </Grid>
       </LayerStyled>
@@ -52,18 +48,18 @@ const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
         <Grid container justify="center" alignItems="center">
           <Grid item xs={4}>
             <FormControlLabel
-              label="결과만"
-              control={(<Checkbox name="resultOnly2" color="primary" onClick={onClick('check')} />)}
+              label="결과외"
+              control={(<Checkbox name="otherwise" color="primary" onClick={_onClick('otherwise')} checked={otherwise} />)}
             />
           </Grid>
           <Grid item xs={8}>
-            <TextField variant="filled" fullWidth size="small" onChange={onChange('text21')} />
-            <TextField variant="filled" fullWidth size="small" onChange={onChange('text22')} />
+            <TextField variant="filled" fullWidth size="small" onChange={_onChange('otherwise1')} value={otherwise1} />
+            <TextField variant="filled" fullWidth size="small" onChange={_onChange('otherwise2')} value={otherwise2} />
           </Grid>
         </Grid>
       </LayerStyled>
       <LayerStyled width={1} justifyContent="flex-end" display="flex">
-        <Button onClick={onClick('search')}>검색</Button>
+        <Button onClick={_onClick('search')}>검색</Button>
       </LayerStyled>
     </Grid>
   </PaperStyled>
@@ -71,14 +67,31 @@ const ItemSearchForm = ({ isOpen, onClick, onChange }) => (
 
 ItemSearchForm.defaultProps = {
   isOpen: false,
-  onClick: () => () => { },
-  onChange: () => () => { },
+  _onClick: () => () => { },
+  _onChange: () => () => { },
+  options: [],
+  option: {},
+  resultOnly: false,
+  otherwise: false,
+
+  resultOnly1: '',
+  resultOnly2: '',
+  otherwise1: '',
+  otherwise2: '',
 };
 
 ItemSearchForm.propTypes = {
   isOpen: bool,
-  onClick: func,
-  onChange: func,
+  _onClick: func,
+  _onChange: func,
+  options: instanceOf(Object),
+  option: instanceOf(Object),
+  resultOnly: bool,
+  otherwise: bool,
+  resultOnly1: string,
+  resultOnly2: string,
+  otherwise1: string,
+  otherwise2: string,
 };
 
-export default ItemSearchForm;
+export default withContainer(ItemSearchFormContainer, ItemSearchForm);
