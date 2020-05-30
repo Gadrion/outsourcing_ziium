@@ -80,7 +80,7 @@ class WorkPage extends React.PureComponent {
         </LeftBottomAreaStyled>
         <RightBottomEdgeStyled right bottom>
           <ButtonStyled variant="contained" onClick={onClick('showIncomplete')}>완료물건안보기</ButtonStyled>
-          <ButtonStyled variant="contained" onClick={onClick('refresh')}>새로고침</ButtonStyled>
+          {/* <ButtonStyled variant="contained" onClick={onClick('refresh')}>새로고침</ButtonStyled> */}
         </RightBottomEdgeStyled>
         {load && <PendingDiv />}
       </>
