@@ -34,6 +34,7 @@ const PositionSearchListPopover = ({
                 button
                 selected={selectedIndex === index}
                 onClick={() => onClick('selectedIndex')(index)}
+                onDoubleClick={() => onClick('positionChange')(index)}
                 key={positionSearch.placeId}
               >
                 <ListItemText primary={positionSearch.address}></ListItemText>

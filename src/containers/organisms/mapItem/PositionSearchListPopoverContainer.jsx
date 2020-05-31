@@ -24,10 +24,29 @@ class PositionSearchListPopoverContainer extends Component {
         break;
       }
       case 'selectedIndex': {
-        console.log('selectedIndex', event);
-        this.setState({
-          selectedIndex: event,
-        })
+        const { selectedIndex } = this.state;
+        if (selectedIndex !== event) {
+          console.log('selectedIndex', event);
+          this.setState({
+            selectedIndex: event,
+          });
+        }
+        break;
+      }
+      case 'positionChange': {
+        const { selectedIndex } = this.state;
+        const { positionSearchList, modifyMapList } = this.props;
+        const findIndex = modifyMapList.findIndex(mapData => mapData.placeId === positionSearchList[selectedIndex].placeId);
+        MapActions.setPositionSearchOpen({ isOpen: false });
+        if (findIndex === -1) {
+          MapActions.getMapGeocodeSuccess({ ...positionSearchList[selectedIndex] });
+          setTimeout(() => {
+            MapActions.showMapData({ placeId: positionSearchList[selectedIndex].placeId });
+          }, 300);
+        } else {
+          MapActions.showMapData({ placeId: positionSearchList[selectedIndex].placeId });
+        }
+        break;
       }
     }
   }
@@ -50,5 +69,6 @@ export default connect(
   state => ({
     isOpen: state.mapModule.get('positionSearchListOpen'),
     positionSearchList: state.mapModule.get('positionSearchList'),
+    modifyMapList: state.mapModule.get('modifyMapList'),
   }),
 )(PositionSearchListPopoverContainer);

@@ -12,8 +12,12 @@ class SearchBoxContainer extends Component {
     const placeList = this.searchBox.getPlaces().map(place => ({
       address: place.formatted_address,
       placeId: place.place_id,
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng(),
+      position: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+      label: '',
+      memo: '상세정보를 입력하세요',
+      history: [],
+      option: {},
+      imageFiles: [],
     }));
 
     MapActions.setPositionSearchOpen({ isOpen: true, positionSearchList: placeList });

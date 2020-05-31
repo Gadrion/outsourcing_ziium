@@ -44,7 +44,6 @@ function* asyncGetMapGeocodeSaga() {
 			const { results } = result;
 
 			yield put(getMapGeocodeSuccess({
-				userId: sessionStorage.getItem('id'),
 				position: { lat, lng },
 				address: results[0].formatted_address,
 				label: '',
