@@ -38,8 +38,11 @@ class MarkerContainer extends Component {
       }
       case 'info': {
         const {
-          imageFiles = [], label = '', memo = '', option = {},
+          imageFiles = [],
         } = this.state;
+        const {
+          label = '', memo = '', option = {},
+        } = this.props;
         StuffActions.setForm({
           name: label,
           memo,
@@ -110,6 +113,7 @@ MarkerContainer.defaultProps = {
     lat: 37.772,
     lng: -122.214,
   },
+  option: {},
 };
 
 MarkerContainer.propTypes = {
@@ -123,6 +127,7 @@ MarkerContainer.propTypes = {
   address: PropTypes.string.isRequired,
   memo: PropTypes.string.isRequired,
   history: PropTypes.instanceOf(Array).isRequired,
+  option: PropTypes.instanceOf(Object),
 };
 
 export default connect(
