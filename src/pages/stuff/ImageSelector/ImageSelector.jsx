@@ -13,7 +13,7 @@ const ImageSelector = ({ files, onChange }) => {
     accept: 'image/*',
     onDrop: acceptedFiles => {
       const images = acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file),
+        url: URL.createObjectURL(file),
       }));
       onChange(images);
     },
@@ -33,7 +33,7 @@ const ImageSelector = ({ files, onChange }) => {
   };
 
   useEffect(() => () => () => (
-    files.forEach(file => URL.revokeObjectURL(file.preview))
+    files.forEach(file => URL.revokeObjectURL(file.url))
   ), [files]);
 
   return (
@@ -46,7 +46,7 @@ const ImageSelector = ({ files, onChange }) => {
         {files.map((file, index) => (
           <ThumbStyled key={file.name}>
             <ThumbInner>
-              <div><ImageStyled src={file.preview} /></div>
+              <div><ImageStyled src={file.url} /></div>
               <div>
                 <ButtonGroup orientation="vertical" color="default" variant="contained" fullWidth>
                   <Button onClick={onDelete(index)}>삭제</Button>

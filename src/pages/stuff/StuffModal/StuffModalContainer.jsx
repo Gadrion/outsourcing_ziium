@@ -72,7 +72,7 @@ class SutffModalContainer extends React.Component {
         for (let i = 0; i < target.files.length; i += 1) {
           const file = target.files[i];
           imageFiles.push(Object.assign(file, {
-            preview: URL.createObjectURL(file),
+            url: URL.createObjectURL(file),
           }));
         }
 
