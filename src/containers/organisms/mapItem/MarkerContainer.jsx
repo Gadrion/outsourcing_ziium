@@ -7,7 +7,25 @@ class MarkerContainer extends Component {
   state = {
     isOpen: false,
     imageFiles: [],
+    visible: true,
   };
+
+  updateState = this.setState;
+
+  componentDidUpdate({ option: prevOption, filter: prevFilter }) {
+    const { filter, option, status } = this.props;
+
+    if (
+      JSON.stringify(option) !== JSON.stringify(prevOption)
+      || JSON.stringify(filter) !== JSON.stringify(prevFilter)
+    ) {
+      const visible = Object.keys(filter).reduce((acc, key) => (
+        !!(acc || (option[key] && filter[key]))
+      ), false);
+      console.log(status !== filter.status, visible);
+      this.updateState({ visible: status !== filter.status && visible });
+    }
+  }
 
   onLoad = marker => {
     this.marker = marker;
@@ -114,6 +132,8 @@ MarkerContainer.defaultProps = {
     lng: -122.214,
   },
   option: {},
+  filter: {},
+  status: '',
 };
 
 MarkerContainer.propTypes = {
@@ -128,17 +148,20 @@ MarkerContainer.propTypes = {
   memo: PropTypes.string.isRequired,
   history: PropTypes.instanceOf(Array).isRequired,
   option: PropTypes.instanceOf(Object),
+  filter: PropTypes.instanceOf(Object),
+  status: PropTypes.string,
 };
 
 export default connect(
   (state, props) => {
     const showPlaceId = state.mapModule.get('showPlaceId');
-    const moduleStatus = state.mapModule.get('filter').status;
-    const { placeId, status } = props;
-    const visible = status !== moduleStatus; // close로 같으면 안보여야 함.
+    const filter = state.mapModule.get('filter');
+    const { placeId } = props;
+    // const visible = status !== moduleStatus; // close로 같으면 안보여야 함.
     return ({
       isOpen: showPlaceId === placeId,
-      visible,
+      filter,
+      // visible,
     });
   },
 )(MarkerContainer);
