@@ -36,9 +36,8 @@ class SutffModalContainer extends React.Component {
         break;
       }
       case 'delete': {
-        if (id) {
-          MapActions.deleteMapData(id);
-        }
+        const { placeId, history } = this.props;
+        MapActions.deleteMapData({ placeId, history });
         StuffActions.open(false);
         break;
       }

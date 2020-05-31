@@ -51,7 +51,10 @@ class WorkPageContainer extends React.Component {
         break;
       }
       case 'map': {
-        MapActions.showMapData({ placeId: '' });
+        const { showPlaceId } = this.props;
+        if (showPlaceId !== '') {
+          MapActions.showMapData({ placeId: '' });
+        }
         const { addItemFocus } = this.state;
         if (addItemFocus) {
           const lat = event.latLng.lat();
@@ -97,6 +100,7 @@ export default connect(
     currentPosion: state.mapModule.get('currentPosion'),
     modifyMapList: state.mapModule.get('modifyMapList'),
     load: state.mapModule.get('load'),
+    showPlaceId: state.mapModule.get('showPlaceId'),
   }),
   () => ({}),
 )(WorkPageContainer);

@@ -149,12 +149,27 @@ function* asyncUpdateMapDataSaga() {
 
 const firebaseDatabaseDelete = mapData => new Promise((resolve, reject) => {
 	console.log('mapData', mapData);
-	firebase.database().ref(`map/${mapData.placeId}/status`).set('close', error => {
+	const mapRef = firebase.database().ref(`map/${mapData.placeId}`);
+	const currentUser = firebase.auth().currentUser;
+	// console.log('user', currentUser);
+	const authInfo = {
+		userId: currentUser.email,
+		updateData: firebase.database.ServerValue.TIMESTAMP,
+	}
+	mapData.history.push(authInfo);
+	mapRef.child('history').set(mapData.history, error => {
 		if (error) {
 			console.log('error???', error);
 			reject(error);
 		} else {
-			resolve('sucess');
+			mapRef.child('status').set('close', error => {
+				if (error) {
+					console.log('error???', error);
+					reject(error);
+				} else {
+					resolve('sucess');
+				}
+			});
 		}
 	});
 });
@@ -164,8 +179,10 @@ function* asyncDeleteMapDataSaga() {
 		const { payload } = yield take(DELETE_MAP_DATA);
 
 		try {
-			const result = yield firebaseDatabaseDelete(payload);
-			console.log('result', result);
+			if (payload.history.length !== 0) {
+				const result = yield firebaseDatabaseDelete(payload);
+				console.log('result', result);
+			}
 			// yield put(updateMapDataSuccess(payload));
 
 		} catch (err) {

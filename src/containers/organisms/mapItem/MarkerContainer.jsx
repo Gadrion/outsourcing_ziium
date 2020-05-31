@@ -58,8 +58,8 @@ class MarkerContainer extends Component {
       }
       case 'delete': {
         // 물건이 팔림
-        const { placeId } = this.props;
-        MapActions.deleteMapData({ placeId });
+        const { placeId, history } = this.props;
+        MapActions.deleteMapData({ placeId, history });
         break;
       }
       case 'close': {
