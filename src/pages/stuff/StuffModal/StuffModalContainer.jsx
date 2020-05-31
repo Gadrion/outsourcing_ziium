@@ -1,27 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { func, number, instanceOf } from 'prop-types';
+import { func, instanceOf, string } from 'prop-types';
 
-import { StuffActions } from 'store/actionCreators';
+import { StuffActions, MapActions } from 'store/actionCreators';
 
 class SutffModalContainer extends React.Component {
-  state = { };
+  state = {};
 
   setRootElem = elem => {
     this.ref = elem;
   }
 
   _onClick = eventName => () => {
-    const { id } = this.props;
+    const {
+      id, onSave,
+      label, memo, option, imageFiles,
+    } = this.props;
 
     switch (eventName) {
       case 'save': {
         // add redux action code
-        StuffActions.updateForm();
+        onSave({
+          label,
+          memo,
+          option,
+          imageFiles,
+        });
         break;
       }
       case 'delete': {
-        StuffActions.deleteForm(id);
+        if (id) {
+          MapActions.deleteMapData(id);
+        }
+        StuffActions.open(false);
         break;
       }
       case 'close': {
@@ -49,25 +60,24 @@ class SutffModalContainer extends React.Component {
   }
 
   _onChange = eventName => (...params) => {
-    const { files } = this.props;
+    const { imageFiles } = this.props;
     switch (eventName) {
       case 'file': {
         const [{ target }] = params;
-        for (let i = 0; i < target.files.length; i += 1) {
-          const file = target.files[i];
-          files.push(Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }));
-        }
-
         const limit = 10;
-        if (files.length > limit) {
+        if (imageFiles.length + target.files.length > limit) {
           // eslint-disable-next-line no-alert
           alert(`최대 ${limit}개만 추가 할 수 있습니다.`);
           return;
         }
+        for (let i = 0; i < target.files.length; i += 1) {
+          const file = target.files[i];
+          imageFiles.push(Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }));
+        }
 
-        StuffActions.setForm({ files: [...files] });
+        StuffActions.setForm({ imageFiles: [...imageFiles] });
         break;
       }
 
@@ -86,18 +96,35 @@ class SutffModalContainer extends React.Component {
 }
 
 SutffModalContainer.defaultProps = {
-  id: null,
+  id: '',
+  onSave: () => { },
+
+  label: '',
+  memo: '',
+  option: {},
+  imageFiles: [],
 };
 
 SutffModalContainer.propTypes = {
   render: func.isRequired,
-  id: number,
-  files: instanceOf(Object).isRequired,
+
+  id: string,
+
+  label: string,
+  memo: string,
+  option: instanceOf(Object),
+  imageFiles: instanceOf(Object),
+
+  onSave: func,
 };
 
-export default connect(({ stuffModule }) => ({
-  id: stuffModule.get('id'),
-  files: stuffModule.get('files'),
+export default connect(({ stuffModule, mapModule }) => ({
+  id: mapModule.get('showPlaceId'),
   isOpen: stuffModule.get('isOpen'),
+
+  label: stuffModule.get('name'),
+  memo: stuffModule.get('memo'),
+  option: stuffModule.get('option'),
+  imageFiles: stuffModule.get('imageFiles'),
 }),
 () => ({}))(SutffModalContainer);

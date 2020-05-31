@@ -64,6 +64,7 @@ class WorkPageContainer extends React.Component {
         const { showIncompleteOpen } = this.state;
         MapActions.setMarkerFilter({ status: showIncompleteOpen ? 'all' : 'close' });
         this.setState({ showIncompleteOpen: !showIncompleteOpen });
+        break;
       }
       default:
         break;

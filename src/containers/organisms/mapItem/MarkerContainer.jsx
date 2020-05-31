@@ -19,15 +19,17 @@ class MarkerContainer extends Component {
       position, address, label, placeId, memo, history,
     } = this.props;
     // 필수 정보
-    const updateInfo = { position, address, label, placeId, memo, history, status };
+    const updateInfo = {
+      position, address, label, placeId, memo, history, status,
+    };
 
     // 없을 수도 있는 정보
-    if (imageFiles) { updateInfo.imageFiles = imageFiles }
+    if (imageFiles) { updateInfo.imageFiles = imageFiles; }
 
     MapActions.updateMapData(updateInfo);
   }
 
-  onClick = type => () => {
+  onClick = type => e => {
     switch (type) {
       case 'marker': {
         const { placeId } = this.props;
@@ -38,6 +40,23 @@ class MarkerContainer extends Component {
         const { imageFiles } = this.state;
         StuffActions.open(true);
         this.mapDataUpdate({ status: 'open', imageFiles });
+        break;
+      }
+      case 'infoSave': {
+        const {
+          position, address, label, placeId, memo, history,
+        } = this.props;
+        // 필수 정보
+        MapActions.updateMapData({
+          position,
+          address,
+          label,
+          placeId,
+          memo,
+          history,
+          status: 'open',
+          ...e,
+        });
         break;
       }
       case 'delete': {
