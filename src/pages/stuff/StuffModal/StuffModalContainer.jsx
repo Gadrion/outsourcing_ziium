@@ -12,20 +12,19 @@ class SutffModalContainer extends React.Component {
   }
 
   _onClick = eventName => () => {
-    const {
-      id, onSave,
-      label, memo, option, imageFiles,
-    } = this.props;
+    const { id } = this.props;
 
     switch (eventName) {
       case 'save': {
+        const {
+          position, address, label, placeId, memo, history, option, imageFiles,
+        } = this.props;
         // add redux action code
-        onSave({
-          label,
-          memo,
-          option,
-          imageFiles,
+        MapActions.updateMapData({
+          position, address, label, placeId, memo, history, option,
+          imageFiles, status: 'open',
         });
+        StuffActions.open(false);
         break;
       }
       case 'delete': {
@@ -121,10 +120,15 @@ SutffModalContainer.propTypes = {
 export default connect(({ stuffModule, mapModule }) => ({
   id: mapModule.get('showPlaceId'),
   isOpen: stuffModule.get('isOpen'),
+  load: stuffModule.get('load'),
 
   label: stuffModule.get('name'),
   memo: stuffModule.get('memo'),
   option: stuffModule.get('option'),
   imageFiles: stuffModule.get('imageFiles'),
+  position: stuffModule.get('position'),
+  address: stuffModule.get('address'),
+  placeId: stuffModule.get('placeId'),
+  history: stuffModule.get('history'),
 }),
 () => ({}))(SutffModalContainer);

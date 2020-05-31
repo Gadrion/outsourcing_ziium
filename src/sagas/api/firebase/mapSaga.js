@@ -51,6 +51,8 @@ function* asyncGetMapGeocodeSaga() {
 				placeId: results[0].place_id,
 				memo: '상세정보를 입력하세요',
 				history: [],
+				option: {},
+				imageFiles: [],
 			}));
 		} catch (err) {
 			// yield put(preLoadActions.sessionKeyGetFailure(''));
@@ -67,11 +69,19 @@ const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
 		userId: currentUser.email,
 		updateData: firebase.database.ServerValue.TIMESTAMP,
 	}
+	let imageFiles = [];
+	if (mapData.imageFiles.length !== 0) {
+		imageFiles = mapData.imageFiles.map(imageFile => ({
+			name: imageFile.name,
+			type: imageFile.type,
+		}));
+	}
 	// console.log('authInfo', authInfo);
 	// history 관리
 	mapData.history.push(authInfo);
 	mapRef.update({
 		...mapData,
+		imageFiles,
 	}, error => {
 		if (error) {
 			console.log('error???', error);
@@ -124,16 +134,29 @@ function* asyncUpdateMapDataSaga() {
 	}
 }
 
+// 삭제 할 때 사용하던것
+// const firebaseDatabaseDelete = mapData => new Promise((resolve, reject) => {
+// 	// console.log('mapData', mapData);
+// 	firebase.database().ref(`map/${mapData.placeId}`).remove(error => {
+// 		if (error) {
+// 			console.log('error???', error);
+// 			reject(error);
+// 		} else {
+// 			resolve('sucess');
+// 		}
+// 	});
+// });
+
 const firebaseDatabaseDelete = mapData => new Promise((resolve, reject) => {
-	// console.log('mapData', mapData);
-	firebase.database().ref(`map/${mapData.placeId}`).remove(error => {
+	console.log('mapData', mapData);
+	firebase.database().ref(`map/${mapData.placeId}/status`).set('close', error => {
 		if (error) {
 			console.log('error???', error);
 			reject(error);
 		} else {
 			resolve('sucess');
 		}
-	})
+	});
 });
 
 function* asyncDeleteMapDataSaga() {

@@ -6,11 +6,13 @@ export const SET_CURRENT_FORM = 'stuff/SET_CURRENT_FORM';
 export const UPDATE_CURRENT_FORM = 'stuff/UPDATE_CURRENT_FORM';
 export const DELETE_CURRENT_FORM = 'stuff/DELETE_CURRENT_FORM';
 export const SET_MODAL_OPEN = 'stuff/SET_MODAL_OPEN';
+export const SET_IMAGE_DATA = 'stuff/SET_IMAGE_DATA';
 
 export const setForm = createAction(SET_CURRENT_FORM);
 export const updateForm = createAction(UPDATE_CURRENT_FORM);
 export const deleteForm = createAction(DELETE_CURRENT_FORM);
 export const open = createAction(SET_MODAL_OPEN);
+export const setImageData = createAction(SET_IMAGE_DATA);
 
 const initialState = Map({
   name: '',
@@ -18,6 +20,7 @@ const initialState = Map({
   option: {},
   imageFiles: [],
   isOpen: false,
+  load: false,
 });
 
 // reducer
@@ -29,5 +32,6 @@ export default handleActions({
     });
     return newState;
   },
-  [SET_MODAL_OPEN]: (state, { payload }) => state.set('isOpen', payload),
+  [SET_MODAL_OPEN]: (state, { payload }) => state.set('isOpen', payload).set('load', payload),
+  [SET_IMAGE_DATA]: (state, { payload: { imageFiles } }) => state.set('imageFiles', imageFiles).set('load', false),
 }, initialState);

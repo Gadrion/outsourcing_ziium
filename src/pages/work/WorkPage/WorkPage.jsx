@@ -16,16 +16,16 @@ import ItemSearchForm from '../../ItemSearchForm/ItemSearchForm';
 class WorkPage extends React.PureComponent {
   render() {
     const {
+      libraries,
       onClick, viewType, addItemFocus, currentPosion, modifyMapList, load,
       positionSearchOpen, setSearchPositionOpen,
-      itemSearchOpen,
+      itemSearchOpen, showIncompleteOpen,
     } = this.props;
-
     return (
       <>
         <LoadScript
           googleMapsApiKey={googleMapsApiKey}
-          libraries={['places']}
+          libraries={libraries}
         >
           <GoogleMap
             mapContainerStyle={{ width: '100wv', height: '100vh' }}
@@ -63,23 +63,23 @@ class WorkPage extends React.PureComponent {
           <PositionSearchListPopover />
         </SearchResultButtonStyled>
         <LogoutAreaStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('logout')}>로그아웃</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('logout')} disabled>로그아웃</ButtonStyled>
         </LogoutAreaStyled>
         <TopCenterAreaStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('addItem')} checkViewType={addItemFocus}>물건추가</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('addItem')} color={addItemFocus ? 'primary' : 'default'}>물건추가</ButtonStyled>
           <ButtonStyled variant="outlined" onClick={onClick('positionSearch')}>위치검색</ButtonStyled>
         </TopCenterAreaStyled>
         <TopRightAreaStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('all')} checkViewType={viewType === 'all'}>전체</ButtonStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('newItem')} checkViewType={viewType === 'newItem'}>신축</ButtonStyled>
-          <ButtonStyled variant="outlined" onClick={onClick('oldItem')} checkViewType={viewType === 'oldItem'}>구옥</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('all')} color={viewType === 'all' ? 'primary' : 'default'}>전체</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('newItem')} color={viewType === 'newItem' ? 'primary' : 'default'}>신축</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('oldItem')} color={viewType === 'oldItem' ? 'primary' : 'default'}>구옥</ButtonStyled>
         </TopRightAreaStyled>
         <LeftBottomAreaStyled onMouseLeave={onClick('itemSearchClose')}>
-          <ButtonStyled variant="contained" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('itemSearch')}>물건검색</ButtonStyled>
           <ItemSearchForm isOpen={itemSearchOpen} />
         </LeftBottomAreaStyled>
         <RightBottomEdgeStyled right bottom>
-          <ButtonStyled variant="contained" onClick={onClick('showIncomplete')}>완료물건안보기</ButtonStyled>
+          <ButtonStyled variant="outlined" onClick={onClick('showIncomplete')} color={showIncompleteOpen ? 'primary' : 'default'}>완료물건안보기</ButtonStyled>
           {/* <ButtonStyled variant="contained" onClick={onClick('refresh')}>새로고침</ButtonStyled> */}
         </RightBottomEdgeStyled>
         {load && <PendingDiv />}

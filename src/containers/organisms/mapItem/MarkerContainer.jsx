@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 class MarkerContainer extends Component {
   state = {
     isOpen: false,
-    imageFiles: [],
-    visible: true,
   };
 
   updateState = this.setState;
@@ -33,21 +31,6 @@ class MarkerContainer extends Component {
     console.log('marker: ', marker);
   }
 
-  mapDataUpdate = ({ status, imageFiles }) => {
-    const {
-      position, address, label, placeId, memo, history,
-    } = this.props;
-    // 필수 정보
-    const updateInfo = {
-      position, address, label, placeId, memo, history, status,
-    };
-
-    // 없을 수도 있는 정보
-    if (imageFiles) { updateInfo.imageFiles = imageFiles; }
-
-    MapActions.updateMapData(updateInfo);
-  }
-
   onClick = type => e => {
     switch (type) {
       case 'marker': {
@@ -57,41 +40,22 @@ class MarkerContainer extends Component {
       }
       case 'info': {
         const {
-          imageFiles = [],
-        } = this.state;
-        const {
-          label = '', memo = '', option = {},
+          position, address, label, placeId, memo, history, option, imageFiles,
         } = this.props;
         StuffActions.setForm({
           name: label,
           memo,
-          imageFiles,
           option,
+          position, address, placeId, history, status: 'open',
+          imageFiles,
         });
         StuffActions.open(true);
-        this.mapDataUpdate({ status: 'open', imageFiles });
-        break;
-      }
-      case 'infoSave': {
-        const {
-          position, address, label, placeId, memo, history,
-        } = this.props;
-        // 필수 정보
-        MapActions.updateMapData({
-          position,
-          address,
-          label,
-          placeId,
-          memo,
-          history,
-          status: 'open',
-          ...e,
-        });
         break;
       }
       case 'delete': {
         // 물건이 팔림
-        this.mapDataUpdate({ status: 'close' });
+        const { placeId } = this.props;
+        MapActions.deleteMapData({ placeId });
         break;
       }
       case 'close': {

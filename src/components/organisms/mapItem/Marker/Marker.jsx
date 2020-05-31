@@ -8,7 +8,7 @@ import { InfoWrapperStyled, InfoButtonWrapperStyled } from './MarkerStyled';
 import StuffModal from '../../../../pages/stuff/StuffModal/StuffModal';
 
 const Marker = ({
-  onLoad, position, label, onClick, marker, isOpen, memo, onChange,
+  onLoad, position, label, onClick, marker, isOpen, memo,
   visible,
 }) => (
   <GMarker
@@ -43,14 +43,13 @@ const Marker = ({
               size="small"
               disabled
             />
-            <Input type="file" onChange={onChange('file')} />
             <InfoButtonWrapperStyled>
               <Button size="small" variant="outlined" onClick={onClick('info')}>상세정보 입력</Button>
               <Button size="small" variant="outlined" onClick={onClick('delete')}>삭제</Button>
             </InfoButtonWrapperStyled>
           </InfoWrapperStyled>
         </InfoWindow>
-        <StuffModal onSave={onClick('infoSave')} />
+        <StuffModal />
       </>
     )}
 
