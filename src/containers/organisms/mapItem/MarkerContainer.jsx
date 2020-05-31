@@ -19,11 +19,12 @@ class MarkerContainer extends Component {
       JSON.stringify(option) !== JSON.stringify(prevOption)
       || JSON.stringify(filter) !== JSON.stringify(prevFilter)
     ) {
+      const filter1 = status !== filter.status;
       const visible = Object.keys(filter).reduce((acc, key) => (
-        !!(acc || (option[key] && filter[key]))
+        !!(filter1 && (acc || (option[key] && filter[key])))
       ), false);
-      console.log(status !== filter.status, visible);
-      this.updateState({ visible: status !== filter.status && visible });
+
+      this.updateState({ visible });
     }
   }
 

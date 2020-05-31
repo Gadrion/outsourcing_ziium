@@ -20,7 +20,7 @@ class ItemSearchFormContainer extends React.Component {
 
   state = {
     option: this.options.reduce((acc, { key }) => {
-      acc[key] = false;
+      acc[key] = true;
       return acc;
     }, {}),
     resultOnly: false,
@@ -30,6 +30,17 @@ class ItemSearchFormContainer extends React.Component {
     otherwise1: '',
     otherwise2: '',
   };
+
+  componentDidMount() {
+    const { option } = this.state;
+    const { status } = this.props;
+
+    MapActions.setMarkerFilter({
+      status,
+      ...option,
+      all: undefined,
+    });
+  }
 
   _onClick = eventName => e => {
     let { option } = this.state;
