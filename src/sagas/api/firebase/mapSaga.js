@@ -69,12 +69,16 @@ const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
 		userId: currentUser.email,
 		updateData: firebase.database.ServerValue.TIMESTAMP,
 	}
-	let imageFiles = [];
+	const imageFiles = [];
 	if (mapData.imageFiles.length !== 0) {
-		imageFiles = mapData.imageFiles.map(imageFile => ({
-			name: imageFile.name,
-			type: imageFile.type,
-		}));
+		mapData.imageFiles.map(imageFile => {
+			if (imageFile.status !== 'delete') {
+				imageFiles.push({
+					name: imageFile.file ? imageFile.file.name : imageFile.name,
+					type: imageFile.file ? imageFile.file.type : imageFile.type,
+				});
+			}
+		});
 	}
 	// console.log('authInfo', authInfo);
 	// history 관리
@@ -108,8 +112,10 @@ const mapdataImageUpdate = async mapData => {
 	for(let i = mapData.imageFiles.length - 1; i >= 0; i--) {
 		const imageData = mapData.imageFiles[i];
 		console.log('imageData', imageData);
-		const result = await firebaseStorageUpdate(mapData.placeId, imageData);
-		console.log('result', result);
+		if (imageData.file) {
+			const result = await firebaseStorageUpdate(mapData.placeId, imageData.file);
+			console.log('result', result);
+		}
 	}
 	return updateResult;
 }
