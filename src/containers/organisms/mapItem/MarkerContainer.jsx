@@ -31,7 +31,7 @@ class MarkerContainer extends Component {
     console.log('marker: ', marker);
   }
 
-  onClick = type => e => {
+  onClick = type => () => {
     switch (type) {
       case 'marker': {
         const { placeId } = this.props;
@@ -46,7 +46,11 @@ class MarkerContainer extends Component {
           name: label,
           memo,
           option,
-          position, address, placeId, history, status: 'open',
+          position,
+          address,
+          placeId,
+          history,
+          status: 'open',
           imageFiles,
         });
         StuffActions.open(true);
@@ -99,6 +103,7 @@ MarkerContainer.defaultProps = {
   option: {},
   filter: {},
   status: '',
+  imageFiles: [],
 };
 
 MarkerContainer.propTypes = {
@@ -115,6 +120,7 @@ MarkerContainer.propTypes = {
   option: PropTypes.instanceOf(Object),
   filter: PropTypes.instanceOf(Object),
   status: PropTypes.string,
+  imageFiles: PropTypes.instanceOf(Array),
 };
 
 export default connect(

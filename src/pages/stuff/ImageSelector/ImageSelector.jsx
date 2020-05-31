@@ -12,10 +12,25 @@ const ImageSelector = ({ files, onChange }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: acceptedFiles => {
-      const images = acceptedFiles.map(file => Object.assign(file, {
+      const beforeFile = [];
+      for (let i = 0; i < files.length; i += 1) {
+        const file = files[i];
+        switch (file.status) {
+          case 'add':
+            break;
+          default:
+            file.status = 'delete';
+            beforeFile.push(file);
+        }
+      }
+      const images = acceptedFiles.map(file => ({
         url: URL.createObjectURL(file),
+        status: 'add',
+        file,
       }));
-      onChange(images);
+      onChange([
+        ...beforeFile, ...images,
+      ]);
     },
   });
 
@@ -28,10 +43,18 @@ const ImageSelector = ({ files, onChange }) => {
   };
 
   const onDelete = index => () => {
-    files.splice(index, 1);
+    const file = files[index];
+    if (file.status === 'delete') {
+      return;
+    }
+
+    if (file.status === 'add') {
+      files.splice(index, 1);
+    } else {
+      file.status = 'delete';
+    }
     onChange([...files]);
   };
-
   useEffect(() => () => () => (
     files.forEach(file => URL.revokeObjectURL(file.url))
   ), [files]);
@@ -43,7 +66,7 @@ const ImageSelector = ({ files, onChange }) => {
         <p>파일 선택</p>
       </div>
       <ThumbRootStlyed>
-        {files.map((file, index) => (
+        {files.filter(({ status }) => status !== 'delete').map((file, index) => (
           <ThumbStyled key={file.name}>
             <ThumbInner>
               <div><ImageStyled src={file.url} /></div>

@@ -17,12 +17,20 @@ class SutffModalContainer extends React.Component {
     switch (eventName) {
       case 'save': {
         const {
+          // eslint-disable-next-line react/prop-types
           position, address, label, placeId, memo, history, option, imageFiles,
         } = this.props;
         // add redux action code
         MapActions.updateMapData({
-          position, address, label, placeId, memo, history, option,
-          imageFiles, status: 'open',
+          position,
+          address,
+          label,
+          placeId,
+          memo,
+          history,
+          option,
+          imageFiles,
+          status: 'open',
         });
         StuffActions.open(false);
         break;
@@ -71,9 +79,11 @@ class SutffModalContainer extends React.Component {
         }
         for (let i = 0; i < target.files.length; i += 1) {
           const file = target.files[i];
-          imageFiles.push(Object.assign(file, {
+          imageFiles.push({
             url: URL.createObjectURL(file),
-          }));
+            status: 'add',
+            file,
+          });
         }
 
         StuffActions.setForm({ imageFiles: [...imageFiles] });
@@ -96,7 +106,6 @@ class SutffModalContainer extends React.Component {
 
 SutffModalContainer.defaultProps = {
   id: '',
-  onSave: () => { },
 
   label: '',
   memo: '',
@@ -113,8 +122,6 @@ SutffModalContainer.propTypes = {
   memo: string,
   option: instanceOf(Object),
   imageFiles: instanceOf(Object),
-
-  onSave: func,
 };
 
 export default connect(({ stuffModule, mapModule }) => ({
