@@ -14,6 +14,19 @@ class MarkerContainer extends Component {
     console.log('marker: ', marker);
   }
 
+  mapDataUpdate = ({ status, imageFiles }) => {
+    const {
+      position, address, label, placeId, memo, history,
+    } = this.props;
+    // 필수 정보
+    const updateInfo = { position, address, label, placeId, memo, history, status };
+
+    // 없을 수도 있는 정보
+    if (imageFiles) { updateInfo.imageFiles = imageFiles }
+
+    MapActions.updateMapData(updateInfo);
+  }
+
   onClick = type => () => {
     switch (type) {
       case 'marker': {
@@ -22,26 +35,14 @@ class MarkerContainer extends Component {
         break;
       }
       case 'info': {
-        const {
-          userId, position, address, label, placeId, memo, history,
-        } = this.props;
         const { imageFiles } = this.state;
         StuffActions.open(true);
-        MapActions.updateMapData({
-          userId,
-          position,
-          address,
-          label,
-          placeId,
-          memo,
-          history,
-          imageFiles,
-        });
+        this.mapDataUpdate({ status: 'open', imageFiles });
         break;
       }
       case 'delete': {
-        const { placeId } = this.props;
-        MapActions.deleteMapData({ placeId });
+        // 물건이 팔림
+        this.mapDataUpdate({ status: 'close' });
         break;
       }
       case 'close': {
@@ -91,7 +92,6 @@ MarkerContainer.propTypes = {
     lat: PropTypes.number,
     lag: PropTypes.number,
   }),
-  userId: PropTypes.string.isRequired,
   placeId: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   memo: PropTypes.string.isRequired,
@@ -101,9 +101,12 @@ MarkerContainer.propTypes = {
 export default connect(
   (state, props) => {
     const showPlaceId = state.mapModule.get('showPlaceId');
-    const { placeId } = props;
+    const moduleStatus = state.mapModule.get('filter').status;
+    const { placeId, status } = props;
+    const visible = status !== moduleStatus; // close로 같으면 안보여야 함.
     return ({
       isOpen: showPlaceId === placeId,
+      visible,
     });
   },
 )(MarkerContainer);

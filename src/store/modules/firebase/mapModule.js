@@ -14,6 +14,8 @@ export const DELETE_MAP_DATA_SUCCESS = 'map/DELETE_MAP_DATA_SUCCESS';
 
 export const SET_POSITION_SEARCH_OPEN = 'map/SET_POSITION_SEARCH_OPEN';
 
+export const SET_MARKER_FILTER = 'map/SET_MARKER_FILTER';
+
 export const getCurrentLocation = createAction(GET_CURRENT_LOCATION);
 export const getCurrentLocationSuccess = createAction(GET_CURRENT_LOCATION_SUCCESS);
 export const getCurrentLocationFailure = createAction(GET_CURRENT_LOCATION_FAILURE);
@@ -26,6 +28,8 @@ export const deleteMapData = createAction(DELETE_MAP_DATA);
 export const deleteMapDataSuccess = createAction(DELETE_MAP_DATA_SUCCESS);
 
 export const setPositionSearchOpen = createAction(SET_POSITION_SEARCH_OPEN);
+
+export const setMarkerFilter = createAction(SET_MARKER_FILTER);
   
 const initialState = Map({
   modifyMapList: [],
@@ -38,6 +42,9 @@ const initialState = Map({
 
   positionSearchListOpen: false,
   positionSearchList: [],
+  filter: {
+    status: 'all',
+  }
 });
 
 const mapListSplice = (mapList, placeId) => {
@@ -74,5 +81,9 @@ export default handleActions({
       ? state.set('positionSearchListOpen', isOpen).set('positionSearchList', positionSearchList)
       : state.set('positionSearchListOpen', isOpen);
   },
+  [SET_MARKER_FILTER]: (state, { payload }) => {
+    const originFilter = state.get('filter');
+    return state.set('filter', { ...originFilter, ...payload });
+  }
 }, initialState);
   

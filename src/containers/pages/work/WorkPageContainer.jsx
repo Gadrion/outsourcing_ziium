@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { MapActions } from 'store/actionCreators';
 
 class WorkPageContainer extends React.Component {
+  libraries = ['places'];
+
   state = {
     addItemFocus: false,
     viewType: 'all',
     positionSearchOpen: false,
     itemSearchOpen: false,
+    showIncompleteOpen: false,
   }
 
   componentDidMount() {
@@ -56,6 +59,11 @@ class WorkPageContainer extends React.Component {
           MapActions.getMapGeocode({ lat, lng });
         }
         break;
+      }
+      case 'showIncomplete': {
+        const { showIncompleteOpen } = this.state;
+        MapActions.setMarkerFilter({ status: showIncompleteOpen ? 'all' : 'close' });
+        this.setState({ showIncompleteOpen: !showIncompleteOpen });
       }
       default:
         break;

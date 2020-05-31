@@ -16,7 +16,6 @@ class PositionSearchListPopoverContainer extends Component {
     switch (type) {
       case 'positionSearchToggle': {
         const { isOpen } = this.props;
-        console.log('????', isOpen);
         MapActions.setPositionSearchOpen({ isOpen: !isOpen });
         break;
       }

@@ -64,7 +64,7 @@ const firebaseDatabaseUpdate = mapData => new Promise((resolve, reject) => {
 	const currentUser = firebase.auth().currentUser;
 	// console.log('user', currentUser);
 	const authInfo = {
-		email: currentUser.email,
+		userId: currentUser.email,
 		updateData: firebase.database.ServerValue.TIMESTAMP,
 	}
 	// console.log('authInfo', authInfo);
@@ -110,7 +110,7 @@ function* asyncUpdateMapDataSaga() {
 
 		try {
 			const result = yield firebaseDatabaseUpdate(payload);
-			if (payload.imageFiles.length !== 0) {
+			if (payload.imageFiles && payload.imageFiles.length !== 0) {
 				const result2 = yield mapdataImageUpdate(payload);
 				console.log('result2', result2);
 			}
