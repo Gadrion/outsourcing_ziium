@@ -1,5 +1,7 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
+import { MapActions } from 'store/actionCreators';
+import connect from 'react-redux/lib/connect/connect';
 
 class ItemSearchFormContainer extends React.Component {
   options = [
@@ -51,6 +53,16 @@ class ItemSearchFormContainer extends React.Component {
         break;
       }
 
+      case 'search': {
+        const { status } = this.props;
+        MapActions.setMarkerFilter({
+          status,
+          ...option,
+          all: undefined,
+        });
+        break;
+      }
+
       default:
         break;
     }
@@ -78,8 +90,15 @@ class ItemSearchFormContainer extends React.Component {
   }
 }
 
-ItemSearchFormContainer.propTypes = {
-  render: func.isRequired,
+ItemSearchFormContainer.defaultProps = {
+  status: 'all',
 };
 
-export default ItemSearchFormContainer;
+ItemSearchFormContainer.propTypes = {
+  render: func.isRequired,
+  status: string,
+};
+
+export default connect(({ mapModule }) => ({
+  status: mapModule.get('filter').status,
+}))(ItemSearchFormContainer);
