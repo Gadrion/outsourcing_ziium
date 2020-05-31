@@ -37,7 +37,15 @@ class MarkerContainer extends Component {
         break;
       }
       case 'info': {
-        const { imageFiles } = this.state;
+        const {
+          imageFiles = [], label = '', memo = '', option = {},
+        } = this.state;
+        StuffActions.setForm({
+          name: label,
+          memo,
+          imageFiles,
+          option,
+        });
         StuffActions.open(true);
         this.mapDataUpdate({ status: 'open', imageFiles });
         break;

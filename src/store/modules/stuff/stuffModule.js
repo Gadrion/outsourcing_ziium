@@ -16,7 +16,7 @@ const initialState = Map({
   name: '',
   memo: '',
   option: {},
-  files: [],
+  imageFiles: [],
   isOpen: false,
 });
 

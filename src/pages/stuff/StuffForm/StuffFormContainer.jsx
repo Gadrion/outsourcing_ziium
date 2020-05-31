@@ -74,14 +74,14 @@ class SutffFormContainer extends React.Component {
 
       case 'images': {
         const limit = 10;
-        const [files] = params;
-        if (files.length > limit) {
+        const [imageFiles] = params;
+        if (imageFiles.length > limit) {
           // eslint-disable-next-line no-alert
           alert(`최대 ${limit}개만 추가 할 수 있습니다.`);
           return;
         }
 
-        StuffActions.setForm({ files });
+        StuffActions.setForm({ imageFiles });
         break;
       }
 
